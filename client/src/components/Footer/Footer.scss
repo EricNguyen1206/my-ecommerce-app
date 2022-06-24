@@ -1,0 +1,81 @@
+@import '../../App.scss';
+.footer {
+    display: flex;
+    @include mobile {
+        flex-direction: "column";
+    }
+
+    .left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+
+        .description {
+            margin: 20px 0px;
+        }
+
+        .social-container {
+            display: flex;
+
+            .social-container__icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                color: white;
+                background-color: #3B5999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .center {
+        flex: 1;
+        padding: 20px;
+        @include mobile {
+            display: none;
+        }
+
+        h3 {
+            margin-bottom: 30px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+
+            li {
+                width: 50%;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .right {
+        flex: 1;
+        padding: 20px;
+        @include mobile {
+            background-color: "#fff8f8"
+        }
+
+        h3 {
+            margin-bottom: 30px;
+        }
+
+        .contact-items {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment {
+            width: 50%;
+        }
+    }
+}

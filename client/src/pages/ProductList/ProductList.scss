@@ -1,0 +1,33 @@
+@import "../../App.scss";
+.product-list {
+    h1 {
+        margin: 20px;
+    }
+    .filter-container {
+        display: flex;
+        justify-content: space-between;
+        .filter {
+            margin: 20px;
+            @include mobile {
+                width: 0 20px;
+                display: flex;
+                flex-direction: column;
+            }
+            span {
+                font-size: 20px;
+                font-weight: 600;
+                margin-right: 20px;
+                @include mobile {
+                    margin-right: 0;
+                }
+            }
+            select {
+                padding: 10px;
+                margin-right: 20px;
+                @include mobile {
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+}
