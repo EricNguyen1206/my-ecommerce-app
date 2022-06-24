@@ -1,0 +1,101 @@
+@import '../../App.scss';
+.navbar {
+    height: 60px;
+    @include mobile {
+        height: 50px;
+    }
+    .wrapper {
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @include mobile {
+            padding: 10px 0px;
+        }
+        .left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            .language {
+                font-size: 14px;
+                cursor: pointer;
+                @include mobile {
+                    display: none;
+                }
+            }
+            .search {
+                border: 0.5px solid lightgray;
+                display: flex;
+                align-items: center;
+                margin-left: 25px;
+                padding: 5px;
+        
+                input {
+                    border: none;
+                    @include mobile {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    
+        .center {
+            flex: 1;
+            text-align: center;
+            a {
+                text-decoration: none;
+                color: #000000;
+                .logo {
+                    font-weight: bold;
+                    margin: 0;
+                    cursor: pointer;
+                    @include mobile {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+    
+        .right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            @include mobile {
+                flex: 2;
+                justify-content: center;
+            }
+            a {
+                text-decoration: none;
+                color: #000000;
+
+                .menu-items {
+                    position: relative;
+                    font-size: 14px;
+                    cursor: pointer;
+                    margin-left: 25px;
+                    @include mobile {
+                        font-size: 12px;
+                        margin-left: 10px;
+                    }
+                    span {
+                        position: absolute;
+                        top: -8px;
+                        right: -8px;
+                        width: 12px;
+                        height: 12px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: white;
+                        color: blue;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        border: 2px solid blue;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+}

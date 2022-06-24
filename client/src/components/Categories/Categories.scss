@@ -1,0 +1,10 @@
+@import '../../App.scss';
+.categories {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    @include mobile {  
+        padding: 0;
+        flex-direction: "column";
+    }
+}

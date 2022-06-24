@@ -12,8 +12,12 @@ const schema = new mongoose.Schema(
                     type: Number,
                     default: 1,
                 },
+                color: { type: String, required: true },
+                size: { type: String, required: true },
             },
         ],
+        quantity: { type: Number, default: 0 },
+        total: { type: Number, default: 0 },
     },
     { timestamps: true }
 );
