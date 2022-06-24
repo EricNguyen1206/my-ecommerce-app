@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
             username: req.body.username,
         });
 
-        !user && res.status(401).json("Wrong User Name");
+        !user && res.status(401).json("Login Fail! Wrong Account Infomation!");
 
         // const hashedPassword = CryptoJS.AES.decrypt(
         //     user.password,
@@ -42,11 +42,7 @@ router.post("/login", async (req, res) => {
         const inputPassword = req.body.password;
 
         user.password != inputPassword &&
-            res.status(401).json({
-                status: "Error",
-                message: "Wrong password!",
-                user: user,
-            });
+            res.status(401).json("Login Fail! Wrong Account Infomation!");
 
         const accessToken = jwt.sign(
             {
@@ -57,15 +53,42 @@ router.post("/login", async (req, res) => {
             { expiresIn: "1h" }
         );
 
-        const { password, ...others } = user._doc;
+        const refreshToken = jwt.sign(
+            {
+                id: user._id,
+                isAdmin: user.isAdmin,
+            },
+            process.env.JWT_REFRESH_KEY
+        );
+
+        const { _id, username, isAdmin, ...others } = user._doc;
         res.status(200).json({
-            success: true,
-            user: others,
-            accessToken: accessToken,
+            user: { _id, username, isAdmin },
+            accessToken,
+            refreshToken,
         });
     } catch (err) {
         res.status(500).json({ status: "Error" });
     }
+});
+
+router.post("/refreshToken", (req, res) => {
+    const refreshToken = req.body.token;
+    if (!refreshToken) res.sendStatus(401);
+    console.log("refreshToken", refreshToken);
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, data) => {
+        if (err) res.sendStatus(403);
+        console.log("data", data);
+        const accessToken = jwt.sign(
+            {
+                id: data.id,
+                isAdmin: data.isAdmin,
+            },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "1h" }
+        );
+        res.json({ accessToken });
+    });
 });
 
 export default router;
