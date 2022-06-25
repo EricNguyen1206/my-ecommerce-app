@@ -75,10 +75,8 @@ router.post("/login", async (req, res) => {
 router.post("/refreshToken", (req, res) => {
     const refreshToken = req.body.token;
     if (!refreshToken) res.sendStatus(401);
-    console.log("refreshToken", refreshToken);
     jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, data) => {
         if (err) res.sendStatus(403);
-        console.log("data", data);
         const accessToken = jwt.sign(
             {
                 id: data.id,

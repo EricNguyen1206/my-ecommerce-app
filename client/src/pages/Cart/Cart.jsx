@@ -3,18 +3,16 @@ import { useSelector } from "react-redux";
 import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
-// import StripeCheckout from "react-stripe-checkout";
+import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import "./Cart.scss";
 // import { userRequest } from "../../requestMethods";
 // import { useHistory } from "react-router";
-import { dummyCart } from "../../data";
 
-// const KEY = process.env.REACT_APP_STRIPE;
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Cart = () => {
-    // const cart = useSelector((state) => state.cart);
-    const [cart, setCart] = useState(null);
+    const cart = useSelector((state) => state.cart);
 
     const [stripeToken, setStripeToken] = useState(null);
     // const history = useHistory();
@@ -22,10 +20,6 @@ const Cart = () => {
     const onToken = (token) => {
         setStripeToken(token);
     };
-
-    useEffect(() => {
-        setCart(dummyCart[0]);
-    }, []);
 
     // useEffect(() => {
     //   const makeRequest = async () => {
@@ -41,7 +35,8 @@ const Cart = () => {
     //   };
     //   stripeToken && makeRequest();
     // }, [stripeToken, cart.total, history]);
-    console.log("cart", cart);
+    console.log("KEY", KEY);
+    console.log("stripeToken", stripeToken);
     return (
         <div className="cart">
             <Navbar />
@@ -75,7 +70,7 @@ const Cart = () => {
                                             src={`https://drive.google.com/uc?export=view&id=${product.img}`}
                                             alt="productimg"
                                         />
-                                        <div>
+                                        <div className="product__details--wrapper">
                                             <span>
                                                 <b>Product:</b> {product.title}
                                             </span>
@@ -134,19 +129,19 @@ const Cart = () => {
                             <span>$ -5.90</span>
                             {/* <span>$ {cart.total}</span> */}
                         </div>
-                        {/* <StripeCheckout
-              name="Lama Shop"
-              image="https://avatars.githubusercontent.com/u/1486366?v=4"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <button>CHECKOUT NOW</button>
-            </StripeCheckout> */}
-                        <button>CHECKOUT NOW</button>
+                        <StripeCheckout
+                            name="Eric Shop"
+                            image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${cart.total}`}
+                            amount={cart.total * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                        >
+                            <button>CHECKOUT NOW</button>
+                        </StripeCheckout>
+                        {/* <button>CHECKOUT NOW</button> */}
                     </div>
                 </div>
             </div>
