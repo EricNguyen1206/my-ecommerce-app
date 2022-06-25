@@ -10,7 +10,15 @@ const initialState = {
 const cartSlice = createSlice({
     name: "cart",
     initialState,
-    reducers: {},
+    reducers: {
+        addProduct: (state, action) => {
+            // let { prd, qtt, ttl } = state;
+            state.products.push(action.payload.product);
+            state.quantity += 1;
+            state.total +=
+                action.payload.product.price * action.payload.product.quantity;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getType(checkCart.checkCartRequest), (state, action) => ({
@@ -53,4 +61,5 @@ const cartSlice = createSlice({
     },
 });
 
+export const { addProduct } = cartSlice.actions;
 export default cartSlice.reducer;

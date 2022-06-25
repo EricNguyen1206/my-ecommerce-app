@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 const Navbar = () => {
-    // const quantity = useSelector(state=>state.cart.quantity)
+    const quantity = useSelector((state) => state.cart.quantity);
     return (
         <div className="navbar">
             <div className="wrapper">
@@ -29,7 +29,16 @@ const Navbar = () => {
                     </Link>
                     <Link to="/cart">
                         <div className="menu-items">
-                            <span className="badge">2</span>
+                            <span
+                                className="badge"
+                                style={{
+                                    display: `${
+                                        quantity > 0 ? "flex" : "none"
+                                    }`,
+                                }}
+                            >
+                                {quantity}
+                            </span>
                             <ShoppingCartOutlined />
                         </div>
                     </Link>

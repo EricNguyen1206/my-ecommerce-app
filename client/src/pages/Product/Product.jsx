@@ -9,7 +9,7 @@ import { productsAPI } from "../../api";
 import { Announcement, Footer, Navbar, Newsletter } from "../../components";
 import { createCart } from "../../redux/actions";
 // import { publicRequest } from "../requestMethods";
-// import { addProduct } from "../redux/cartRedux";
+import { addProduct } from "../../redux/slices/cartSlice";
 
 const Product = () => {
     const location = useLocation();
@@ -21,7 +21,7 @@ const Product = () => {
     const [size, setSize] = useState("");
     const [alert, setAlert] = useState(false);
     const { user } = useSelector((state) => state.user);
-    const { cart } = useSelector((state) => state.cart);
+    const { products } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,6 +29,8 @@ const Product = () => {
             try {
                 const res = await productsAPI.getById(id);
                 setProduct(res);
+                setColor(res.color[0]);
+                setSize(res.size[0]);
             } catch (err) {
                 console.log("err", err);
             }
@@ -50,20 +52,30 @@ const Product = () => {
         if (!user) {
             navigate("/login");
         } else {
-            console.log("add to cart");
-            if (cart.cart === null) {
-                // if cart is null then create new cart
-                console.log("create new cart!");
-                const cart = {
-                    userId: user._id,
-                    products: [{ productsId: id, quantity }],
-                };
+            // if (cart.products.length === 0) {
+            // if cart is null then create new cart
+            const cart = {
+                userId: user._id,
+                products: [
+                    {
+                        productsId: id,
+                        quantity: quantity,
+                        color: color,
+                        size: size,
+                    },
+                ],
+                quantity: quantity,
+                total: product.price * quantity,
+            };
 
-                dispatch(createCart.createCartRequest(cart));
-            } else {
-                // else update current cart
-                console.log("update current cart!");
-            }
+            // dispatch(createCart.createCartRequest(cart));
+            dispatch(
+                addProduct({ product: { ...product, color, size, quantity } })
+            );
+            // } else {
+            //     // else update current cart
+            //     console.log("update current cart!");
+            // }
         }
     };
     return (

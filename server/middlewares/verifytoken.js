@@ -13,7 +13,6 @@ const verifyToken = (req, res, next) => {
                     messsage: "Token is not valid!",
                     err: err,
                 });
-            console.log("data", data);
             req.user = data;
             next();
         });

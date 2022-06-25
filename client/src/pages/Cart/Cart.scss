@@ -41,6 +41,7 @@
                 flex: 3;
                 .product {
                     display: flex;
+                    flex-direction: row;
                     justify-content: space-between;
                     @include mobile {
                         flex-direction: column;
@@ -51,12 +52,12 @@
                         img {
                             width: 200px;
                         }
-                        div {
+                        .product__details--wrapper {
                             padding: 20px;
                             display: flex;
                             flex-direction: column;
                             justify-content: space-around;
-                            .color {
+                            .product__details--color {
                                 width: 20px;
                                 height: 20px;
                                 border-radius: 50%;
