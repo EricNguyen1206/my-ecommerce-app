@@ -1,13 +1,14 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import StripeCheckout from "react-stripe-checkout";
+
 import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
-import StripeCheckout from "react-stripe-checkout";
-import { useEffect, useState } from "react";
+import api from "../../api";
 import "./Cart.scss";
-// import { userRequest } from "../../requestMethods";
-// import { useHistory } from "react-router";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -15,26 +16,32 @@ const Cart = () => {
     const cart = useSelector((state) => state.cart);
 
     const [stripeToken, setStripeToken] = useState(null);
-    // const history = useHistory();
+    const navigate = useNavigate();
 
     const onToken = (token) => {
         setStripeToken(token);
     };
 
-    // useEffect(() => {
-    //   const makeRequest = async () => {
-    //     try {
-    //       const res = await userRequest.post("/checkout/payment", {
-    //         tokenId: stripeToken.id,
-    //         amount: 500,
-    //       });
-    //       history.push("/success", {
-    //         stripeData: res.data,
-    //         products: cart, });
-    //     } catch {}
-    //   };
-    //   stripeToken && makeRequest();
-    // }, [stripeToken, cart.total, history]);
+    useEffect(() => {
+        const makeRequest = async () => {
+            try {
+                const res = await api.post("/checkout/payment", {
+                    tokenId: stripeToken.id,
+                    amount: 500,
+                });
+                console.log("res:", res);
+                navigate("/success", {
+                    state: {
+                        stripeData: res,
+                        products: cart,
+                    },
+                });
+            } catch (err) {
+                console.log("err", err);
+            }
+        };
+        stripeToken && makeRequest();
+    }, [stripeToken, cart, navigate]);
     console.log("KEY", KEY);
     console.log("stripeToken", stripeToken);
     return (
@@ -109,16 +116,16 @@ const Cart = () => {
                         <h1>ORDER SUMMARY</h1>
                         <div className="summary__items">
                             <span>Subtotal</span>
-                            <span>$ 5.90</span>
-                            {/* <span>$ {cart.total}</span> */}
+                            {/* <span>$ 5.90</span> */}
+                            <span>$ {cart.total}</span>
                         </div>
                         <div className="summary__items">
                             <span>Estimated Shipping</span>
-                            <span>$ 5.90</span>
+                            <span>$ 0</span>
                         </div>
                         <div className="summary__items">
                             <span>Shipping Discount</span>
-                            <span>$ -5.90</span>
+                            <span>$ 0</span>
                         </div>
                         <div
                             className="summary__items"
@@ -126,8 +133,7 @@ const Cart = () => {
                             type="total"
                         >
                             <span>Total</span>
-                            <span>$ -5.90</span>
-                            {/* <span>$ {cart.total}</span> */}
+                            <span>$ {cart.total}</span>
                         </div>
                         <StripeCheckout
                             name="Eric Shop"

@@ -72,5 +72,4 @@ const cartAPI = {
 };
 
 export { authApi, productsAPI, cartAPI };
-
 export default api;

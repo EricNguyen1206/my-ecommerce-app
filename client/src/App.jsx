@@ -14,9 +14,6 @@ import { loadUserRequest } from "./redux/actions";
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-        }
         dispatch(loadUserRequest());
     }, [dispatch]);
     return (
