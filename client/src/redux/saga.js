@@ -56,7 +56,6 @@ function* addToCartSaga(action) {
 }
 
 function* createCartSaga(action) {
-    console.log("action", action);
     try {
         const cart = yield call(cartAPI.create, action.payload);
         yield put(createCart.createCartSuccess(cart));
@@ -67,7 +66,6 @@ function* createCartSaga(action) {
 }
 
 function* chechCartSaga(action) {
-    console.log("action", action);
     try {
         const cart = yield call(cartAPI.checkUserCart, ...action.payload);
         yield put(checkCart.checkCartSuccess(cart));
@@ -89,7 +87,6 @@ function* loadUserSaga(action) {
             console.log("err", err);
         }
     }
-    console.log("user", user);
     yield put(loadUser(user));
 }
 

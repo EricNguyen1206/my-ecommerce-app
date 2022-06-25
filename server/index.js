@@ -9,7 +9,7 @@ import authRoute from "./routes/auth.js";
 import productRoute from "./routes/product.js";
 import cartRoute from "./routes/cart.js";
 import orderRoute from "./routes/order.js";
-// import stripeRoute from "./routes/stripe.js";
+import stripeRoute from "./routes/stripe.js";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
-// app.use("/api/checkout", stripeRoute);
+app.use("/api/checkout", stripeRoute);
 
 mongoose
     .connect(URI, {
