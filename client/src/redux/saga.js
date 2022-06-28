@@ -44,17 +44,6 @@ function* loginSaga(action) {
     }
 }
 
-function* addToCartSaga(action) {
-    yield console.log("action", action);
-    // try {
-    //     const user = yield call(authApi.login, action.payload);
-    //     yield put(addToCart.addCartSuccess(user));
-    // } catch (err) {
-    //     console.error(err);
-    //     yield put(addToCart.addCartFailure(err));
-    // }
-}
-
 function* createCartSaga(action) {
     try {
         const cart = yield call(cartAPI.create, action.payload);
@@ -83,9 +72,7 @@ function* loadUserSaga(action) {
                 authApi.refreshToken(user.refreshToken)
             );
             user.accessToken = newToken;
-        } catch (err) {
-            console.log("err", err);
-        }
+        } catch {}
     }
     yield put(loadUser(user));
 }

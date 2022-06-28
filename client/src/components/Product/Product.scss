@@ -1,77 +1,99 @@
-.product {
-    flex: 1;
-    margin: 4px;
-    min-width: 280px;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5fbfd;
-    position: relative;
-    &:hover .product__info {
-      opacity: 1;
-    }
-    .circle {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background-color: white;
-        position: absolute;
-    }
-    img {
-        width: 270px;
-        height: 270px;
-        // height: 75%;
-        // width: 100%;
-        z-index: 2;
-    }
-    .product__detail {
-        width: 270px;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 4px;
-        .product__detail--name,
-        .product__detail--price {
-            font-weight: 600;
-            font-size: 1rem;
-            transition: 0.5s;
-        }
-    }
-    .product__info {
-        opacity: 0;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.2);
-        z-index: 3;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.5s ease;
-        cursor: pointer;
-        .product__icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color:rgba(0, 0, 0, 0.8);
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px;
-            transition: all 0.5s ease;
-            &:hover {
-              background-color: #e9f5f5;
-              transform: scale(1.1);
-            }
-            a {
+// .product {
+//     flex: 1;
+//     margin: 4px;
+//     min-width: 280px;
+//     height: 350px;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: #f5fbfd;
+//     position: relative;
+//     &:hover .product__info {
+//       opacity: 1;
+//     }
+//     .circle {
+//         width: 200px;
+//         height: 200px;
+//         border-radius: 50%;
+//         background-color: white;
+//         position: absolute;
+//     }
+//     img {
+//         width: 270px;
+//         height: 270px;
+//         // height: 75%;
+//         // width: 100%;
+//         z-index: 2;
+//     }
+//     .product__detail {
+//         width: 270px;
+//         display: flex;
+//         justify-content: space-between;
+//         margin-top: 4px;
+//         .product__detail--name,
+//         .product__detail--price {
+//             font-weight: 600;
+//             font-size: 1rem;
+//             transition: 0.5s;
+//         }
+//     }
+//     .product__info {
+//         opacity: 0;
+//         width: 100%;
+//         height: 100%;
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         background-color: rgba(0, 0, 0, 0.2);
+//         z-index: 3;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         transition: all 0.5s ease;
+//         cursor: pointer;
+//         .product__icon {
+//             width: 40px;
+//             height: 40px;
+//             border-radius: 50%;
+//             color:rgba(0, 0, 0, 0.8);
+//             background-color: white;
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             margin: 10px;
+//             transition: all 0.5s ease;
+//             &:hover {
+//               background-color: #e9f5f5;
+//               transform: scale(1.1);
+//             }
+//             a {
                 
-            color:rgba(0, 0, 0, 0.8);
-            }
-        }
+//             color:rgba(0, 0, 0, 0.8);
+//             }
+//         }
+//     }
+
+.product-card{
+    cursor: pointer;
+    transform: scale(1, 1);
+    transition: transform 0.5s ease;
+    color: #324d67;
+    &:hover{
+        transform: scale(1.1,1.1)
     }
-    
+    .product-image{
+        border-radius: 15px;
+        background-color: #ebebeb;
+        transform: scale(1, 1);
+        transition: transform 0.5s ease;
+    }
+    .product-name{
+        font-weight: 500;
+    }
+    .product-price{
+        font-weight: 800;
+        margin-top: 6px;
+        color: black;
+    }
 }

@@ -6,7 +6,7 @@
         rgba(255, 255, 255, 0.5),
         rgba(255, 255, 255, 0.5)
       ),
-      url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+      url("https://firebasestorage.googleapis.com/v0/b/my-ecommerce-app-770f8.appspot.com/o/header.webp?alt=media&token=da7740bc-026d-4290-a6a3-fdd104685812")
         center;
     background-size: cover;
     display: flex;
@@ -35,7 +35,12 @@
             }
             span {
                 font-size: 12px;
-                margin: 20px 0px;
+                margin: 20px 0px 0px;
+            }
+            a {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
             }
             button {
                 width: 40%;

@@ -1,5 +1,5 @@
 import { Alert } from "reactstrap";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, Star, StarHalf } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ const Product = () => {
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
     const [alert, setAlert] = useState(false);
+    const [index, setIndex] = useState(0);
     const { user } = useSelector((state) => state.user);
     const { products } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -46,53 +47,64 @@ const Product = () => {
         }
     };
 
-    const handleClick = () => {
-        console.log("addProduct");
-        setAlert(true);
+    const handleAddProduct = (e) => {
+        e.preventDefault();
         if (!user) {
             navigate("/login");
         } else {
-            // if (cart.products.length === 0) {
-            // if cart is null then create new cart
-            const cart = {
-                userId: user._id,
-                products: [
-                    {
-                        productsId: id,
-                        quantity: quantity,
-                        color: color,
-                        size: size,
-                    },
-                ],
-                quantity: quantity,
-                total: product.price * quantity,
-            };
-
-            // dispatch(createCart.createCartRequest(cart));
             dispatch(
                 addProduct({ product: { ...product, color, size, quantity } })
             );
-            // } else {
-            //     // else update current cart
-            //     console.log("update current cart!");
-            // }
+        }
+    };
+    const handleBuyNow = (e) => {
+        e.preventDefault();
+        if (!user) {
+            navigate("/login");
+        } else {
+            dispatch(
+                addProduct({ product: { ...product, color, size, quantity } })
+            );
+            navigate("/cart");
         }
     };
     return (
         <div className="product-page">
             <Navbar />
             <Announcement />
-            <div className="wrapper">
-                <div className="img-container">
-                    <img
-                        src={`https://drive.google.com/uc?export=view&id=${product.img}`}
-                        alt="product imgage"
-                    />
+            <div className="product-detail-container">
+                <div>
+                    <div className="image-container">
+                        <img
+                            src={product.img}
+                            className="product-detail-image"
+                            alt={product.title}
+                        />
+                    </div>
+                    {/* 
+                        <div className="small-images-container">
+                            {product?.image?.map((item, i) => (
+                            <img key={i} src={urlFor(item)} className={i === index ? "small-image selected-image" : "small-image"} onMouseEnter={() => setIndex(i)} />
+                            ))}
+                        </div>
+                    */}
                 </div>
-                <div className="info-container">
+
+                <div className="product-detail-desc">
                     <h1>{product.title}</h1>
+                    <div className="reviews">
+                        <div>
+                            <Star />
+                            <Star />
+                            <Star />
+                            <Star />
+                            <StarHalf />
+                        </div>
+                        <p>(20)</p>
+                    </div>
+                    <h4>Details: </h4>
                     <p>{product.desc}</p>
-                    <span>$ {product.price}</span>
+                    <p className="price">$ {product.price}</p>
                     <div className="filter-container">
                         <div className="filter">
                             <span className="title">Color</span>
@@ -122,20 +134,46 @@ const Product = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="add-container">
-                        <div className="amount-container">
-                            <Remove onClick={() => handleQuantity("dec")} />
-                            <span className="amount">{quantity}</span>
-                            <Add onClick={() => handleQuantity("inc")} />
-                        </div>
-                        <button onClick={handleClick}>ADD TO CART</button>
+                    <div className="quantity">
+                        <h3>Quantity:</h3>
+                        <p className="quantity-desc">
+                            <span
+                                className="minus"
+                                onClick={() => handleQuantity("dec")}
+                            >
+                                <Remove />
+                            </span>
+                            <span className="num">{quantity}</span>
+                            <span
+                                className="plus"
+                                onClick={() => handleQuantity("inc")}
+                            >
+                                <Add />
+                            </span>
+                        </p>
+                    </div>
+                    <div className="buttons">
+                        <button
+                            type="button"
+                            className="add-to-cart"
+                            onClick={handleAddProduct}
+                        >
+                            Add to Cart
+                        </button>
+                        <button
+                            type="button"
+                            className="buy-now"
+                            onClick={handleBuyNow}
+                        >
+                            Buy Now
+                        </button>
                     </div>
                 </div>
             </div>
-            <Alert
+            {/* <Alert
                 isOpen={alert}
                 toggle={() => window.setTimeout(() => setAlert(false), 3000)}
-            />
+            /> */}
             <Newsletter />
             <Footer />
         </div>

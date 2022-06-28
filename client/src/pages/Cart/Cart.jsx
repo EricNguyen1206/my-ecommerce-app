@@ -1,6 +1,6 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 
@@ -51,21 +51,12 @@ const Cart = () => {
             <div className="wrapper">
                 <h1>YOUR BAG</h1>
                 <div className="top">
-                    <button type="button">CONTINUE SHOPPING</button>
+                    <Link to="/">
+                        <button type="button">CONTINUE SHOPPING</button>
+                    </Link>
                     <div className="content">
-                        <span>Shopping Bag(2)</span>
-                        <span>Your Wishlist (0)</span>
+                        <span>Shopping Bag({cart.quantity})</span>
                     </div>
-                    <button
-                        type="button"
-                        style={{
-                            color: "white",
-                            backgroundColor: "black",
-                            border: "none",
-                        }}
-                    >
-                        CHECKOUT NOW
-                    </button>
                 </div>
                 <div className="bottom">
                     <div className="content">
@@ -74,7 +65,7 @@ const Cart = () => {
                                 <div className="product">
                                     <div className="product__details">
                                         <img
-                                            src={`https://drive.google.com/uc?export=view&id=${product.img}`}
+                                            src={product.img}
                                             alt="productimg"
                                         />
                                         <div className="product__details--wrapper">

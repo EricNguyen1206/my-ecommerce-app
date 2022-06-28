@@ -42,10 +42,12 @@ const Products = ({ cat, filters, sort }) => {
         <div
             className="products"
             style={{
-                padding: "20px",
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "space-between",
+                justifyContent: "center",
+                gap: 15,
+                marginTop: 20,
+                width: "100%",
             }}
         >
             {cat
