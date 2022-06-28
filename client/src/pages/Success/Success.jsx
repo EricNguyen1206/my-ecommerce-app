@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
+
+import { clearProduct } from "../../redux/slices/cartSlice";
 import api from "../../api";
 
 const Success = () => {
     const location = useLocation();
-    console.log("location", location);
+    const dispatch = useDispatch();
     //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
     const data = location.state.stripeData;
     const cart = location.state.cart;
@@ -24,7 +26,8 @@ const Success = () => {
                     amount: cart.total,
                     address: data.billing_details.address,
                 });
-                setOrderId(res.data._id);
+                setOrderId(res.id);
+                dispatch(clearProduct());
             } catch (err) {
                 console.log("err", err);
             }

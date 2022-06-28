@@ -14,16 +14,13 @@ const Login = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch(login.loginRequest({ username, password }));
-    };
-    useEffect(() => {
-        if (user) {
-            dispatch(
-                checkCart.checkCartRequest([user.user._id, user.accessToken])
-            );
+        try {
+            dispatch(login.loginRequest({ username, password }));
             navigate("/");
+        } catch (e) {
+            console.log(e);
         }
-    }, [isFetching]);
+    };
     return (
         <div className="login">
             <div className="wrapper">

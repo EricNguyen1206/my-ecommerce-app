@@ -18,7 +18,6 @@ const authApi = {
         return api.post(url, newAccount);
     },
     refreshToken(token) {
-        console.log("token", token);
         const url = "/auth/refreshToken";
         return api.post(url, { token: token });
     },
