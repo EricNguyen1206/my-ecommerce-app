@@ -5,8 +5,6 @@ const Register = () => {
             <div className="wrapper">
                 <h1>CREATE AN ACCOUNT</h1>
                 <form>
-                    <input type="text" placeholder="name" />
-                    <input type="text" placeholder="last name" />
                     <input type="text" placeholder="username" />
                     <input type="email" placeholder="email" />
                     <input type="password" placeholder="password" />
