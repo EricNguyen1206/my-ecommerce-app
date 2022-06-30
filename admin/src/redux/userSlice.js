@@ -3,6 +3,7 @@ import { authApi } from "./apiCall";
 
 export const login = createAsyncThunk("user/login", async (account) => {
     const response = await authApi.login(account);
+    console.log("response", response);
     return response;
 });
 

@@ -29,6 +29,7 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({
             username: req.body.username,
         });
+        console.log("user", req.body);
 
         !user && res.status(401).json("Login Fail! Wrong Account Infomation!");
 
@@ -43,7 +44,6 @@ router.post("/login", async (req, res) => {
 
         user.password != inputPassword &&
             res.status(401).json("Login Fail! Wrong Account Infomation!");
-
         const accessToken = jwt.sign(
             {
                 id: user._id,

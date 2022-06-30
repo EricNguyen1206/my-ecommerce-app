@@ -9,17 +9,26 @@ const api = axios.create(
 api.interceptors.response.use((res) => res.data);
 
 const authApi = {
-    login(account) {
+    async login(account) {
+        console.log("account", account);
         const url = "/auth/login";
-        return api.post(url, account);
+        const res = await api.post(url, account);
+        return res;
     },
     register(newAccount) {
         const url = "/auth/register";
         return api.post(url, newAccount);
     },
-    refreshToken(token) {
+    async refreshToken() {
+        let user = JSON.parse(localStorage.getItem("user"));
+        const JWTToken = user.refreshToken;
         const url = "/auth/refreshToken";
-        return api.post(url, { token: token });
+        let newToken = "";
+        // const getNewToken = async () => {
+        // };
+        // getNewToken();
+        newToken = await api.post(url, { token: JWTToken });
+        return newToken.accessToken;
     },
 };
 const productsAPI = {
@@ -38,24 +47,29 @@ const productsAPI = {
 };
 
 const cartAPI = {
-    addProduct(token, cart) {
-        const url = ``;
-        return api.post(url, {
-            headers: { token: token },
+    update(cart) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const JWTToken = user.accessToken;
+        const userId = user.user._id;
+        const url = `/carts/${userId}`;
+        cart.userId = userId;
+        return api.put(url, {
+            headers: { authorization: `Bearer ${JWTToken}` },
             body: JSON.stringify(cart),
         });
     },
-    checkUserCart(userId, JWTToken) {
-        console.log("userId", userId);
-        console.log("token", JWTToken);
+    checkUserCart(user) {
+        const JWTToken = user.accessToken;
+        const userId = user.user._id;
         const url = `/carts/find/${userId}`;
-
         return api.get(url, {
             headers: { authorization: `Bearer ${JWTToken}` },
         });
     },
-    create(JWTToken, cart) {
+    create(cart, userId, JWTToken) {
         const url = "/carts";
+        cart.userId = userId;
+        console.log("create cart", cart);
         return api.post(
             url,
             {
@@ -64,10 +78,15 @@ const cartAPI = {
             cart
         );
     },
-    update(token, id) {},
-    delete(token, id) {},
-    getUserCart(token, id) {},
-    getAll(token) {},
+    delete() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const JWTToken = user.accessToken;
+        const userId = user.user._id;
+        const url = `/carts/${userId}`;
+        return api.delete(url, {
+            headers: { authorization: `Bearer ${JWTToken}` },
+        });
+    },
 };
 
 export { authApi, productsAPI, cartAPI };

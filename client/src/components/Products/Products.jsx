@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Pagination from "@mui/material/Pagination";
+
 import Product from "../Product/Product";
 import { getProducts, getProductsByCategory } from "../../redux/actions";
-const Products = ({ cat, filters, sort }) => {
+
+const Products = ({ cat, filters, sort, limit = 8 }) => {
     const products = useSelector((state) => state.products.products);
-    const [filteredProducts, setFilteredProducts] = useState([]);
     const dispatch = useDispatch();
+
+    const [count, setCount] = useState(1);
+    const [page, setPage] = useState(1);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [productOnpage, setProductOnpage] = useState([]);
+
     useEffect(() => {
         cat
             ? dispatch(getProductsByCategory.getProductsByCategoryRequest(cat))
@@ -13,14 +21,15 @@ const Products = ({ cat, filters, sort }) => {
     }, [dispatch, cat]);
 
     useEffect(() => {
-        cat &&
-            setFilteredProducts(
-                products.filter((item) =>
-                    Object.entries(filters).every(([key, value]) =>
-                        item[key].includes(value)
-                    )
+        if (cat) {
+            const filterproducts = products.filter((item) =>
+                Object.entries(filters).every(([key, value]) =>
+                    item[key].includes(value)
                 )
             );
+            setFilteredProducts(filterproducts);
+            setCount(Math.ceil(filterproducts.length / 8));
+        }
     }, [products, filters, cat]);
 
     useEffect(() => {
@@ -38,6 +47,16 @@ const Products = ({ cat, filters, sort }) => {
             );
         }
     }, [sort]);
+
+    useEffect(() => {
+        cat
+            ? setProductOnpage(filteredProducts.slice((page - 1) * 8, page * 8))
+            : setProductOnpage(products.slice((page - 1) * 8, page * 8));
+    }, [page, cat, filteredProducts, products]);
+    const handlePageChange = (e, pg) => {
+        setPage(pg);
+    };
+
     return (
         <div
             className="products"
@@ -50,15 +69,24 @@ const Products = ({ cat, filters, sort }) => {
                 width: "100%",
             }}
         >
-            {cat
-                ? filteredProducts.map((item, index) => (
-                      <Product item={item} key={index} />
-                  ))
-                : products
-                      .slice(0, 8)
-                      .map((item, index) => (
-                          <Product item={item} key={index} />
-                      ))}
+            {productOnpage.map((item, index) => (
+                <Product item={item} key={index} />
+            ))}
+            <div
+                className="pagination"
+                style={{
+                    display: `${limit > 8 ? "flex" : "none"}`,
+                    width: "100%",
+                    marginTop: 20,
+                    justifyContent: "center",
+                }}
+            >
+                <Pagination
+                    count={count}
+                    color="primary"
+                    onChange={(e, pg) => handlePageChange(e, pg)}
+                />
+            </div>
         </div>
     );
 };

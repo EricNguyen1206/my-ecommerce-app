@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { checkCart, createCart, getType } from "../actions";
+import { cartAPI } from "../../api";
 
 const initialState = {
     products: [],
@@ -12,11 +13,19 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action) => {
-            // let { prd, qtt, ttl } = state;
             state.products.push(action.payload.product);
             state.quantity += 1;
             state.total +=
                 action.payload.product.price * action.payload.product.quantity;
+            if (state.products.length > 1) {
+                cartAPI.update(state);
+            } else {
+                cartAPI.create(
+                    state,
+                    action.payload.user._id,
+                    action.payload.user.accessToken
+                );
+            }
         },
         clearProduct: (state) => {
             state.products = [];
@@ -27,10 +36,9 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getType(checkCart.checkCartRequest), (state, action) => ({
-                initialState,
+                ...initialState,
             }))
             .addCase(getType(checkCart.checkCartSuccess), (state, action) => {
-                const quantity = action.payload.products.reduce();
                 return {
                     products: action.payload.products,
                     quantity: false,
@@ -38,31 +46,8 @@ const cartSlice = createSlice({
                 };
             })
             .addCase(getType(checkCart.checkCartFailure), (state, action) => ({
-                initialState,
-            }))
-            .addCase(
-                getType(createCart.createCartRequest),
-                (state, action) => ({
-                    cart: null,
-                    isFetching: true,
-                    error: false,
-                })
-            )
-            .addCase(getType(createCart.createCartSuccess), (state, action) => {
-                return {
-                    cart: action.payload,
-                    isFetching: false,
-                    error: false,
-                };
-            })
-            .addCase(
-                getType(createCart.createCartFailure),
-                (state, action) => ({
-                    cart: null,
-                    isFetching: false,
-                    error: true,
-                })
-            );
+                ...initialState,
+            }));
     },
 });
 

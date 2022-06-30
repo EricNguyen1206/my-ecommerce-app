@@ -40,10 +40,4 @@ export const checkCart = createActions({
     checkCartFailure: (err) => err,
 });
 
-export const createCart = createActions({
-    createCartRequest: (payload) => payload,
-    createCartSuccess: (payload) => payload,
-    createCartFailure: (err) => err,
-});
-
 export const loadUserRequest = createAction("user/loadUserRequest");

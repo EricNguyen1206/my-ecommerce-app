@@ -14,8 +14,26 @@
         }
         .left {
             flex: 1;
+            a {
+                text-decoration: none;
+                color: #000000;
+                .logo {
+                    font-weight: bold;
+                    margin: 0;
+                    color: $primary;
+                    cursor: pointer;
+                    @include mobile {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+    
+        .center {
+            flex: 1;
             display: flex;
             align-items: center;
+            justify-content: center;
             .language {
                 font-size: 14px;
                 cursor: pointer;
@@ -24,36 +42,23 @@
                 }
             }
             .search {
-                border: 0.5px solid lightgray;
+                border: 0.5px solid $primary;
                 display: flex;
                 align-items: center;
-                margin-left: 25px;
                 padding: 5px;
         
                 input {
                     border: none;
+                    width: 300px;
+                    &:focus-visible {
+                        outline: none;
+                    }
                     @include mobile {
                         width: 50px;
                     }
                 }
             }
-        }
-    
-        .center {
-            flex: 1;
-            text-align: center;
-            a {
-                text-decoration: none;
-                color: #000000;
-                .logo {
-                    font-weight: bold;
-                    margin: 0;
-                    cursor: pointer;
-                    @include mobile {
-                        font-size: 24px;
-                    }
-                }
-            }
+            
         }
     
         .right {
@@ -67,7 +72,7 @@
             }
             a {
                 text-decoration: none;
-                color: #000000;
+                color: $secondary;
 
                 .menu-items {
                     position: relative;
@@ -87,7 +92,7 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        background-color: teal;
+                        background-color: $primary;
                         color: #fff;
                         font-size: 0.8rem;
                         font-weight: 600;

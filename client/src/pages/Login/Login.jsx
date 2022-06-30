@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { login, checkCart } from "../../redux/actions";
+import { login } from "../../redux/actions";
 import "./Login.scss";
 
 const Login = () => {
@@ -14,12 +14,8 @@ const Login = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        try {
-            dispatch(login.loginRequest({ username, password }));
-            navigate("/");
-        } catch (e) {
-            console.log(e);
-        }
+        console.log("login");
+        dispatch(login.loginRequest({ username, password }));
     };
     return (
         <div className="login">

@@ -21,7 +21,7 @@ function App() {
     return (
         <Router>
             <Switch>
-                {!user ? (
+                {user.user == null ? (
                     <>
                         <Route path="/">
                             <Login />
@@ -32,6 +32,9 @@ function App() {
                     </>
                 ) : (
                     <>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
                         {user.user.user.isAdmin && (
                             <>
                                 <Topbar />

@@ -9,16 +9,16 @@ const Navbar = () => {
         <div className="navbar">
             <div className="wrapper">
                 <div className="left">
-                    <span className="language">EN</span>
+                    <Link to="/">
+                        <h1 className="logo">ERIC.</h1>
+                    </Link>
+                </div>
+                <div className="center">
+                    {/* <span className="language">EN</span> */}
                     <div className="search">
                         <input placeholder="Search" />
                         <Search style={{ color: "gray", fontSize: 16 }} />
                     </div>
-                </div>
-                <div className="center">
-                    <Link to="/">
-                        <h1 className="logo">ERIC.</h1>
-                    </Link>
                 </div>
                 <div className="right">
                     <Link to="/register">

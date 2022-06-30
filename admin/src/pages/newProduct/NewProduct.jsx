@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import "./newProduct.css";
 import {
     getStorage,
@@ -9,11 +10,14 @@ import {
 import app from "../../firebase";
 import { addProduct } from "../../redux/productSlice";
 import { useDispatch } from "react-redux";
+import Toast from "../../components/Toast";
 
 export default function NewProduct() {
     const [inputs, setInputs] = useState({});
     const [file, setFile] = useState(null);
     const [cat, setCat] = useState([]);
+    const [color, setColor] = useState([]);
+    const [size, setSize] = useState([]);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
@@ -25,6 +29,21 @@ export default function NewProduct() {
         setCat(e.target.value.split(","));
     };
 
+    const handleColor = (e) => {
+        setColor(e.target.value.split(","));
+    };
+
+    const handleSize = (e) => {
+        setSize(e.target.value.split(","));
+    };
+
+    const clearForm = () => {
+        setInputs({});
+        setFile(null);
+        setCat([]);
+        setColor([]);
+        setSize([]);
+    };
     const handleClick = (e) => {
         e.preventDefault();
         const fileName = new Date().getTime() + file.name;
@@ -66,70 +85,103 @@ export default function NewProduct() {
                         ...inputs,
                         img: downloadURL,
                         categories: cat,
+                        size: size,
+                        color: color,
                     };
                     dispatch(addProduct(product));
                 });
             }
         );
+        toast("Create product success!");
     };
 
     return (
         <div className="newProduct">
+            <Toast />
             <h1 className="addProductTitle">New Product</h1>
             <form className="addProductForm">
-                <div className="addProductItem">
-                    <label>Image</label>
-                    <input
-                        type="file"
-                        id="file"
-                        onChange={(e) => setFile(e.target.files[0])}
-                    />
+                <div>
+                    <div className="addProductItem">
+                        <label>Image</label>
+                        <input
+                            type="file"
+                            id="file"
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Title</label>
+                        <input
+                            name="title"
+                            type="text"
+                            placeholder="Apple Airpods"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Description</label>
+                        <input
+                            name="desc"
+                            type="text"
+                            placeholder="description..."
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Price</label>
+                        <input
+                            name="price"
+                            type="number"
+                            placeholder="100"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Sale Price</label>
+                        <input
+                            name="sale"
+                            type="number"
+                            placeholder="100"
+                            onChange={handleChange}
+                        />
+                    </div>
                 </div>
-                <div className="addProductItem">
-                    <label>Title</label>
-                    <input
-                        name="title"
-                        type="text"
-                        placeholder="Apple Airpods"
-                        onChange={handleChange}
-                    />
+                <div>
+                    <div className="addProductItem">
+                        <label>Categories</label>
+                        <input
+                            type="text"
+                            placeholder="jeans,skirts"
+                            onChange={handleCat}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Color</label>
+                        <input
+                            type="text"
+                            placeholder="black, white"
+                            onChange={handleColor}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Size</label>
+                        <input
+                            type="text"
+                            placeholder="S, M, L"
+                            onChange={handleSize}
+                        />
+                    </div>
+                    <div className="addProductItem">
+                        <label>Stock</label>
+                        <select name="inStock" onChange={handleChange}>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <button onClick={handleClick} className="addProductButton">
+                        Create
+                    </button>
                 </div>
-                <div className="addProductItem">
-                    <label>Description</label>
-                    <input
-                        name="desc"
-                        type="text"
-                        placeholder="description..."
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="addProductItem">
-                    <label>Price</label>
-                    <input
-                        name="price"
-                        type="number"
-                        placeholder="100"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="addProductItem">
-                    <label>Categories</label>
-                    <input
-                        type="text"
-                        placeholder="jeans,skirts"
-                        onChange={handleCat}
-                    />
-                </div>
-                <div className="addProductItem">
-                    <label>Stock</label>
-                    <select name="inStock" onChange={handleChange}>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
-                <button onClick={handleClick} className="addProductButton">
-                    Create
-                </button>
             </form>
         </div>
     );

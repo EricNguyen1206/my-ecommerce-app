@@ -1,7 +1,8 @@
 @import '../../App.scss';
 .newsletter {
     height: 60vh;
-    background-color: #fcf5f5;
+    color: $secondary;
+    background-color: $primary-light;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +27,7 @@
         background-color: white;
         display: flex;
         justify-content: space-between;
-        border: 1px solid lightgray;
+        border: 1px solid $primary;
         @include mobile {
             width: 80%;
         }
@@ -37,8 +38,10 @@
         }
         button {
             flex: 1;
-            border: none;
-            background-color: teal;
+            margin-right: -1px;
+            margin-bottom: -1px;
+            border: 2px solid $primary;
+            background-color: $primary;
             color: white;
         }
     }
