@@ -1,34 +1,50 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useDispatch } from "react-redux";
 
-import Home from "./pages/Home/Home";
-import ProductList from "./pages/ProductList/ProductList";
-import Product from "./pages/Product/Product";
-import Cart from "./pages/Cart/Cart";
-import Success from "./pages/Success/Success";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import { loadUserRequest } from "./redux/actions";
+import { useUser } from "./hooks";
+import { publicRoutes, userRoutes } from "./routes";
+import { Loader, PageNotFound } from "./components";
+import { loadUser, checkCart } from "./redux/actions";
 
 function App() {
+    const { user } = useUser();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(loadUserRequest());
+        dispatch(loadUser.loadUserRequest());
     }, [dispatch]);
+
+    useEffect(() => {
+        user && dispatch(checkCart.checkCartRequest(user));
+    }, [dispatch, user]);
+
+    const renderPage = (routes) => {
+        if (routes && routes.length > 0) {
+            return routes.map((item, index) => {
+                return (
+                    <Route
+                        key={index}
+                        exact={item.exact}
+                        path={item.path}
+                        element={item.element}
+                    />
+                );
+            });
+        }
+    };
+    console.log("user", user);
     return (
         <Router>
-            <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route path="/products/:category" element={<ProductList />} />
-                <Route path="/product/:id" element={<Product />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/success" element={<Success />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
+            <Suspense fallback={<Loader />}>
+                <Routes>
+                    {!user ? renderPage(publicRoutes) : renderPage(userRoutes)}
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </Suspense>
         </Router>
     );
+    // localStorage.removeItem("user");
+    // return <div>Hello World!</div>
 }
 
 export default App;

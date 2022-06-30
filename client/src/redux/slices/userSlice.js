@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, getType } from "../actions";
+import { login, loadUser, getType } from "../actions";
 
 const initialState = {
     user: null,
@@ -11,10 +11,12 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        loadUser: (state, action) => ({
-            ...state,
-            user: action.payload,
-        }),
+        logout: () => {
+            localStorage.removeItem("user");
+            return {
+                ...initialState,
+            };
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -27,12 +29,25 @@ const userSlice = createSlice({
                 };
             })
             .addCase(getType(login.loginFailure), (state, action) => ({
-                user: null,
+                ...state,
                 isFetching: false,
                 error: true,
-            }));
+            }))
+            .addCase(getType(loadUser.loadUserSuccess), (state, action) => {
+                console.log("loadUserSuccess");
+                localStorage.setItem("user", JSON.stringify(action.payload));
+                return {
+                    user: action.payload,
+                    isFetching: false,
+                    error: false,
+                };
+            })
+            .addCase(
+                getType(loadUser.loadUserFailure),
+                (state, action) => initialState
+            );
     },
 });
 
-export const { loadUser } = userSlice.actions;
+export const { logout } = userSlice.actions;
 export default userSlice.reducer;

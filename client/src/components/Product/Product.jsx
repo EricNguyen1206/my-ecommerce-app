@@ -1,8 +1,8 @@
-import {
-    FavoriteBorderOutlined,
-    SearchOutlined,
-    ShoppingCartOutlined,
-} from "@mui/icons-material";
+// import {
+//     FavoriteBorderOutlined,
+//     SearchOutlined,
+//     ShoppingCartOutlined,
+// } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./Product.scss";
 

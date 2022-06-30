@@ -1,10 +1,21 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
 import "./Navbar.scss";
+import { useUser } from "../../hooks";
+import { logout } from "../../redux/slices/userSlice";
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const user = useUser();
     const quantity = useSelector((state) => state.cart.quantity);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+    };
+
     return (
         <div className="navbar">
             <div className="wrapper">
@@ -21,12 +32,27 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <Link to="/register">
-                        <div className="menu-items">REGISTER</div>
-                    </Link>
-                    <Link to="/login">
-                        <div className="menu-items">SIGN IN</div>
-                    </Link>
+                    {user.user ? (
+                        <button
+                            className="logout"
+                            onClick={handleLogout}
+                            style={{
+                                backgroundColor: "transparent",
+                                border: "none",
+                            }}
+                        >
+                            LOGOUT
+                        </button>
+                    ) : (
+                        <>
+                            <Link to="/register">
+                                <div className="menu-items">REGISTER</div>
+                            </Link>
+                            <Link to="/login">
+                                <div className="menu-items">SIGN IN</div>
+                            </Link>
+                        </>
+                    )}
                     <Link to="/cart">
                         <div className="menu-items">
                             <span

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 import "./Register.scss";
 import { authApi } from "../../api";
@@ -20,17 +21,18 @@ const Register = () => {
         if (username && email && password && password === confirm) {
             try {
                 const res = signup({ username, email, password });
-                console.log(res);
+                toast.success("Register successfully. Let's shopping!");
             } catch (err) {
-                alert("Register fail! Please try again.");
+                toast.error("Register fail. Please try again!");
             }
-            navigate("/login");
+            navigate("/");
         } else {
-            alert("Somethings wrong! Please try again.");
+            toast.error("Invalid information, check input again!");
         }
     };
     return (
         <div className="register">
+            <Toaster position="top-center" reverseOrder={false} />
             <div className="wrapper">
                 <h1>CREATE AN ACCOUNT</h1>
                 <form>
