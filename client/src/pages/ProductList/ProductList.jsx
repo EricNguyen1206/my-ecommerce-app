@@ -32,14 +32,11 @@ const ProductList = () => {
                 <div className="filter">
                     <span>Filter Products:</span>
                     <select name="color" onChange={handleFilters}>
-                        <option disabled>Color</option>
-                        <option>white</option>
-                        <option>black</option>
-                        <option>red</option>
-                        <option>gray</option>
-                        <option>blue</option>
-                        <option>yellow</option>
-                        <option>green</option>
+                        <option disabled>Filter</option>
+                        <option>t-shirt</option>
+                        <option>pants</option>
+                        <option>hoodie</option>
+                        <option>shirt</option>
                     </select>
                     <select name="size" onChange={handleFilters}>
                         <option disabled>Size</option>

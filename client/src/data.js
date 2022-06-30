@@ -1,43 +1,43 @@
 export const sliderItems = [
     {
         id: 1,
-        img: "https://www.nicepng.com/png/full/5-54704_fashion-model-png-pic-fashion-model-png.png",
+        img: "https://firebasestorage.googleapis.com/v0/b/my-ecommerce-app-770f8.appspot.com/o/banner.webp?alt=media&token=8d88f516-448c-4cff-86ea-d3227daf8c1e",
         title: "SUMMER SALE",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "f5fafd",
+        bg: "f3f8f3",
     },
     {
         id: 2,
         img: "https://i.ibb.co/DG69bQ4/2.png",
         title: "AUTUMN COLLECTION",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "fcf1ed",
+        bg: "fcf5f5",
     },
     {
         id: 3,
         img: "https://i.ibb.co/cXFnLLV/3.png",
         title: "LOUNGEWEAR LOVE",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-        bg: "fbf0f4",
+        bg: "f3f3f9",
     },
 ];
 
 export const categories = [
     {
         id: 1,
-        img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        img: "https://firebasestorage.googleapis.com/v0/b/my-ecommerce-app-770f8.appspot.com/o/men_category.webp?alt=media&token=033f4b32-06c5-4623-b0bc-b54373b11411",
         title: "MEN PRODUCTS!",
         cat: "men",
     },
     {
         id: 2,
-        img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        img: "https://firebasestorage.googleapis.com/v0/b/my-ecommerce-app-770f8.appspot.com/o/women_category.webp?alt=media&token=60994e0d-4ce2-4c94-baf1-98fed48e68aa",
         title: "WOMEN DESIGNS",
         cat: "women",
     },
     {
         id: 3,
-        img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        img: "https://firebasestorage.googleapis.com/v0/b/my-ecommerce-app-770f8.appspot.com/o/kid_banner.webp?alt=media&token=dfa8e34a-d396-48e2-977e-48d066941c7e",
         title: "KIDS CLOTHES",
         cat: "kids",
     },

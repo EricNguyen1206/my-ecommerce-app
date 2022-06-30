@@ -1,4 +1,4 @@
-import { Alert } from "reactstrap";
+import toast, { Toaster } from "react-hot-toast";
 import { Add, Remove, Star, StarHalf } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,10 +19,7 @@ const Product = () => {
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
-    const [alert, setAlert] = useState(false);
-    const [index, setIndex] = useState(0);
     const { user } = useSelector((state) => state.user);
-    const { products } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -39,6 +36,7 @@ const Product = () => {
         getProduct();
     }, [id]);
 
+    const notify = () => toast.success("Product has added!");
     const handleQuantity = (type) => {
         if (type === "dec") {
             quantity > 1 && setQuantity(quantity - 1);
@@ -53,8 +51,12 @@ const Product = () => {
             navigate("/login");
         } else {
             dispatch(
-                addProduct({ product: { ...product, color, size, quantity } })
+                addProduct({
+                    product: { ...product, color, size, quantity },
+                    user,
+                })
             );
+            notify();
         }
     };
     const handleBuyNow = (e) => {
@@ -65,12 +67,14 @@ const Product = () => {
             dispatch(
                 addProduct({ product: { ...product, color, size, quantity } })
             );
+            notify();
             navigate("/cart");
         }
     };
     return (
         <div className="product-page">
             <Navbar />
+            <Toaster position="top-center" reverseOrder={false} />
             <Announcement />
             <div className="product-detail-container">
                 <div>
@@ -170,10 +174,6 @@ const Product = () => {
                     </div>
                 </div>
             </div>
-            {/* <Alert
-                isOpen={alert}
-                toggle={() => window.setTimeout(() => setAlert(false), 3000)}
-            /> */}
             <Newsletter />
             <Footer />
         </div>

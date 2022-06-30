@@ -14,7 +14,7 @@ const publicRequest = axios.create({
 
 const userRequest = axios.create({
     baseURL: BASE_URL,
-    headers: { token: `Bearer ${TOKEN}` },
+    headers: { authorization: `Bearer ${TOKEN}` },
 });
 
 publicRequest.interceptors.response.use((res) => res.data);

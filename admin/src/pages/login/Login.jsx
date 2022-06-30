@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { login } from "../../redux/userSlice";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(username, password);
-        dispatch(login({ username, password }));
+        try {
+            dispatch(login({ username, password }));
+            history.push("/");
+        } catch (error) {
+            console.log("err:", error);
+        }
     };
 
     return (

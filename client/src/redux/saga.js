@@ -5,7 +5,6 @@ import {
     getProductsByCategory,
     login,
     checkCart,
-    createCart,
     getType,
 } from "./actions";
 import { loadUser } from "./slices/userSlice";
@@ -35,22 +34,13 @@ function* fetchProductsByCatSaga(action) {
 }
 
 function* loginSaga(action) {
+    console.log("action");
     try {
         const user = yield call(authApi.login, action.payload);
         yield put(login.loginSuccess(user));
     } catch (err) {
         console.error(err);
         yield put(login.loginFailure(err));
-    }
-}
-
-function* createCartSaga(action) {
-    try {
-        const cart = yield call(cartAPI.create, action.payload);
-        yield put(createCart.createCartSuccess(cart));
-    } catch (err) {
-        console.error(err);
-        yield put(createCart.createCartError(err));
     }
 }
 
@@ -65,15 +55,23 @@ function* chechCartSaga(action) {
 }
 
 function* loadUserSaga(action) {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user"));
+    let cart = null;
     if (user) {
         try {
-            const newToken = yield call(
-                authApi.refreshToken(user.refreshToken)
-            );
+            const newToken = yield call(authApi.refreshToken);
             user.accessToken = newToken;
-        } catch {}
+        } catch (err) {
+            console.log("can't create new token'");
+        }
+        try {
+            cart = yield call(cartAPI.checkUserCart(user));
+            yield put(checkCart.checkCartSuccess(cart));
+        } catch (err) {
+            yield put(checkCart.checkCartFailure());
+        }
     }
+    localStorage.setItem("user", JSON.stringify(user));
     yield put(loadUser(user));
 }
 
@@ -86,7 +84,8 @@ function* watcherSaga() {
         fetchProductsByCatSaga
     );
     yield takeLatest(getType(checkCart.checkCartRequest), chechCartSaga);
-    yield takeLatest(getType(createCart.createCartRequest), createCartSaga);
+    yield takeLatest(getType(checkCart.checkCartRequest), chechCartSaga);
+    // yield takeLatest(getType(addToCart.addToCartRequest), addToCartSaga);
 }
 
 export default watcherSaga;

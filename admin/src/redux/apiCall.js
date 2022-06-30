@@ -21,7 +21,6 @@ export const productsApi = {
         return publicRequest.get("/products");
     },
     add(product) {
-        console.log("Post:", product);
         return userRequest.post(`/products`, product);
     },
     update(product) {

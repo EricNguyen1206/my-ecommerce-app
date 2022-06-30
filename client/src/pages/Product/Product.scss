@@ -5,7 +5,7 @@
         gap: 40px;
         margin: 40px 80px;
         margin-top: 60px;
-        color: #324d67;
+        color: $secondary;
         .image-container {
             .product-detail-image{
                 border-radius: 15px;
@@ -15,7 +15,7 @@
                 cursor: pointer;
                 transition: .3s ease-in-out;
                 &:hover{
-                    background-color: #f02d34;
+                    background-color: $primary;
                 }
             }
         }
@@ -31,12 +31,12 @@
                 cursor: pointer;
             }
             .selected-image{
-                background-color:#f02d34;
+                background-color:$primary;
             }
         }
         .product-detail-desc {
             .reviews{
-                color: #f02d34;
+                color: $primary;
                 margin-top: 10px;
                 display: flex;
                 gap: 5px;
@@ -52,7 +52,7 @@
                 font-weight: 700 ;
                 font-size: 26px;
                 margin-top: 30px;
-                color:#f02d34;
+                color:$primary;
             }
             .filter-container {
                 width: 50%;
@@ -82,9 +82,9 @@
                         font-size: 1rem;
                         font-weight: 400;
                         border-radius: 10px;
-                        border: 2px solid #f02d34;
+                        border: 2px solid $primary;
                         &:focus-visible {
-                            border: 2px solid #f02d34;
+                            border: 2px solid $primary;
                         }
                     }
                 }
@@ -109,16 +109,16 @@
                         cursor: pointer;
                     }
                     .minus{
-                        color: #f02d34;
+                        color: $primary;
                         &:hover {
                             background-color: rgba(200, 200, 200, 0.5);
                         }
                     }
                     .num {
-                        border: 2px solid #f02d34;
+                        border: 2px solid $primary;
                     }
                     .plus{
-                        color: rgb(49, 168, 49);
+                        color: #31a831;
                         &:hover {
                             background-color: rgba(200, 200, 200, 0.5);
                         }
@@ -131,7 +131,7 @@
                 .buy-now{
                     width: 200px;
                     padding: 10px 20px;
-                    background-color: #f02d34;
+                    background-color: $primary;
                     color: white;
                     border: none;
                     margin-top: 40px;
@@ -146,12 +146,12 @@
                 }
                 .add-to-cart{
                     padding: 10px 20px;
-                    border: 1px solid #f02d34 ;
+                    border: 1px solid $primary ;
                     margin-top: 40px;
                     font-size: 18px;
                     font-weight: 500;
                     background-color: white;
-                    color: #f02d34;
+                    color: $primary;
                     cursor: pointer;
                     width: 200px;
                     transform: scale(1, 1);

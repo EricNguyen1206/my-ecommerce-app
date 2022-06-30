@@ -15,7 +15,7 @@ const Footer = () => {
             <div className="left">
                 <h1>ERIC.</h1>
                 <p className="description">
-                    ERIC. is a company thay ensures it provides casual clothes
+                    ERIC. is a company that ensures it provides casual clothes
                     for all kinds of people.
                 </p>
                 <div className="social-container">

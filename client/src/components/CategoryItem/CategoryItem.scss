@@ -33,6 +33,11 @@
             color:gray;
             cursor: pointer;
             font-weight: 600;
+            &:hover {
+                background-color: $primary;
+                color:white;
+                transition: .5s;
+            }
         }
     }
 }

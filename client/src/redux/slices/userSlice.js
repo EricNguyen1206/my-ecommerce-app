@@ -18,11 +18,6 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getType(login.loginRequest), (state, action) => ({
-                user: null,
-                isFetching: true,
-                error: false,
-            }))
             .addCase(getType(login.loginSuccess), (state, action) => {
                 localStorage.setItem("user", JSON.stringify(action.payload));
                 return {
