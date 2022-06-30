@@ -70,15 +70,31 @@
                 flex: 2;
                 justify-content: center;
             }
+            .logout {
+                position: relative;
+                font-size: 1.2rem;
+                font-weight: 400;
+                cursor: pointer;
+                margin-left: 25px;
+                color: $secondary;
+                &:hover {
+                    color: $primary;
+                }
+            }
             a {
                 text-decoration: none;
                 color: $secondary;
 
                 .menu-items {
                     position: relative;
-                    font-size: 14px;
+                    font-size: 1.2rem;
+                    font-weight: 400;
                     cursor: pointer;
                     margin-left: 25px;
+                    color: $secondary;
+                    &:hover {
+                        color: $primary;
+                    }
                     @include mobile {
                         font-size: 12px;
                         margin-left: 10px;

@@ -10,7 +10,6 @@ api.interceptors.response.use((res) => res.data);
 
 const authApi = {
     async login(account) {
-        console.log("account", account);
         const url = "/auth/login";
         const res = await api.post(url, account);
         return res;
@@ -24,9 +23,6 @@ const authApi = {
         const JWTToken = user.refreshToken;
         const url = "/auth/refreshToken";
         let newToken = "";
-        // const getNewToken = async () => {
-        // };
-        // getNewToken();
         newToken = await api.post(url, { token: JWTToken });
         return newToken.accessToken;
     },
@@ -58,18 +54,18 @@ const cartAPI = {
             body: JSON.stringify(cart),
         });
     },
-    checkUserCart(user) {
+    async checkUserCart(user) {
         const JWTToken = user.accessToken;
         const userId = user.user._id;
         const url = `/carts/find/${userId}`;
-        return api.get(url, {
+        const res = await api.get(url, {
             headers: { authorization: `Bearer ${JWTToken}` },
         });
+        return res;
     },
     create(cart, userId, JWTToken) {
         const url = "/carts";
         cart.userId = userId;
-        console.log("create cart", cart);
         return api.post(
             url,
             {

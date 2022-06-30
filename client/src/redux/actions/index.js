@@ -40,4 +40,8 @@ export const checkCart = createActions({
     checkCartFailure: (err) => err,
 });
 
-export const loadUserRequest = createAction("user/loadUserRequest");
+export const loadUser = createActions({
+    loadUserRequest: undefined,
+    loadUserSuccess: (payload) => payload,
+    loadUserFailure: undefined,
+});

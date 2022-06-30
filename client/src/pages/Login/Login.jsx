@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 import { login } from "../../redux/actions";
+import { useUser } from "../../hooks";
 import "./Login.scss";
 
 const Login = () => {
@@ -10,26 +12,35 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user, isFetching, error } = useSelector((state) => state.user);
+    const { user, isFetching, error } = useUser();
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log("login");
         dispatch(login.loginRequest({ username, password }));
     };
+    useEffect(() => {
+        user && navigate(-1);
+    }, [user, dispatch, navigate]);
+
+    useEffect(() => {
+        error && toast.error("Login fail. Please try again!");
+    }, [error]);
     return (
         <div className="login">
+            <Toaster position="top-center" reverseOrder={false} />
             <div className="wrapper">
                 <h1>SIGN IN</h1>
                 <form>
                     <input
                         placeholder="username"
+                        autoComplete="on"
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <input
                         placeholder="password"
+                        autoComplete="on"
                         type="password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value.trim())}
                     />
                     <button onClick={handleClick} disabled={isFetching}>
                         {/* <button onClick={handleClick}> */}

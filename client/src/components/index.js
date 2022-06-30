@@ -5,6 +5,8 @@ import Navbar from "./Navbar/Navbar";
 import Newsletter from "./Newsletter/Newsletter";
 import Products from "./Products/Products";
 import Slider from "./Slider/Slider";
+import Loader from "./common/Loader";
+import PageNotFound from "./common/PageNotFound";
 
 export {
     Announcement,
@@ -14,4 +16,6 @@ export {
     Newsletter,
     Products,
     Slider,
+    Loader,
+    PageNotFound,
 };

@@ -7,8 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Product.scss";
 import { productsAPI } from "../../api";
 import { Announcement, Footer, Navbar, Newsletter } from "../../components";
-import { createCart } from "../../redux/actions";
-// import { publicRequest } from "../requestMethods";
+import { useUser } from "../../hooks";
 import { addProduct } from "../../redux/slices/cartSlice";
 
 const Product = () => {
@@ -19,7 +18,7 @@ const Product = () => {
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
-    const { user } = useSelector((state) => state.user);
+    const { user } = useUser();
     const dispatch = useDispatch();
 
     useEffect(() => {

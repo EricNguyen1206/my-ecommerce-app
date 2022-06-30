@@ -39,15 +39,17 @@ const cartSlice = createSlice({
                 ...initialState,
             }))
             .addCase(getType(checkCart.checkCartSuccess), (state, action) => {
-                return {
-                    products: action.payload.products,
-                    quantity: false,
-                    total: false,
-                };
+                console.log("action", action);
+                // return {
+                //     products: action.payload,
+                //     quantity: false,
+                //     total: false,
+                // };
             })
-            .addCase(getType(checkCart.checkCartFailure), (state, action) => ({
-                ...initialState,
-            }));
+            .addCase(
+                getType(checkCart.checkCartFailure),
+                (state, action) => {}
+            );
     },
 });
 

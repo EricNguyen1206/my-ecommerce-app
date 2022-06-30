@@ -5,7 +5,7 @@ import Pagination from "@mui/material/Pagination";
 import Product from "../Product/Product";
 import { getProducts, getProductsByCategory } from "../../redux/actions";
 
-const Products = ({ cat, filters, sort, limit = 8 }) => {
+const Products = ({ cat, filters, sort, limit }) => {
     const products = useSelector((state) => state.products.products);
     const dispatch = useDispatch();
 
@@ -75,7 +75,9 @@ const Products = ({ cat, filters, sort, limit = 8 }) => {
             <div
                 className="pagination"
                 style={{
-                    display: `${limit > 8 ? "flex" : "none"}`,
+                    display: `${
+                        limit || productOnpage.length <= 8 ? "none" : "flex"
+                    }`,
                     width: "100%",
                     marginTop: 20,
                     justifyContent: "center",
