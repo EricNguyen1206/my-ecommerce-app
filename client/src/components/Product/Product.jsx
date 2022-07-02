@@ -11,27 +11,6 @@ const Product = ({ item }) => {
         return string.length > n ? string.substring(0, n - 1) + "..." : string;
     }
     return (
-        // <div className="product">
-        //     <div className="circle" />
-        //     <img src={item.img} alt="product" />
-        //     <div className="product__detail">
-        //         <p className="product__detail--name">{item.title}</p>
-        //         <p className="product__detail--price">${item.price}</p>
-        //     </div>
-        //     <div className="product__info">
-        //         <div className="product__icon">
-        //             <ShoppingCartOutlined />
-        //         </div>
-        //         <div className="product__icon">
-        //             <Link to={`/product/${item._id}`}>
-        //                 <SearchOutlined />
-        //             </Link>
-        //         </div>
-        //         <div className="product__icon">
-        //             <FavoriteBorderOutlined />
-        //         </div>
-        //     </div>
-        // </div>
         <div>
             <Link to={`/product/${item._id}`}>
                 <div className="product-card">
@@ -43,7 +22,33 @@ const Product = ({ item }) => {
                         alt="product-img"
                     />
                     <p className="product-name">{truncate(item.title, 28)}</p>
-                    <p className="product-price">${item.price}</p>
+                    <p className="product-price">
+                        <span
+                            className="product-sale"
+                            style={{
+                                textDecoration: `${
+                                    item.sale ? "line-through" : "none"
+                                }`,
+                            }}
+                        >
+                            ${item.price}
+                        </span>
+                        {item.sale && (
+                            <span
+                                className="product-sale"
+                                style={{
+                                    marginLeft: 10,
+                                    fontSize: "1.2rem",
+                                    color: "#f02d34",
+                                }}
+                            >
+                                ${item.sale}
+                            </span>
+                        )}
+                    </p>
+                    {item.categories.includes("new") && (
+                        <p className="new">NEW</p>
+                    )}
                 </div>
             </Link>
         </div>

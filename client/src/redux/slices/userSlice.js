@@ -34,7 +34,6 @@ const userSlice = createSlice({
                 error: true,
             }))
             .addCase(getType(loadUser.loadUserSuccess), (state, action) => {
-                console.log("loadUserSuccess");
                 localStorage.setItem("user", JSON.stringify(action.payload));
                 return {
                     user: action.payload,

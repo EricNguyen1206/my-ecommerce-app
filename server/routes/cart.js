@@ -11,9 +11,7 @@ const router = express.Router();
 //CREATE
 
 router.post("/", verifyToken, async (req, res) => {
-    console.log("first");
     const newCart = new Cart(req.body);
-    console.log("newCart", newCart);
     try {
         const savedCart = await newCart.save();
         res.status(200).json(savedCart);
@@ -25,13 +23,12 @@ router.post("/", verifyToken, async (req, res) => {
 //UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
     try {
-        const updatedCart = await Cart.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
+        const updatedCart = await Cart.findOneAndUpdate(
+            { userId: req.params.id },
+            req.body,
             { new: true }
         );
+        console.log("updatecart", updatedCart);
         res.status(200).json(updatedCart);
     } catch (err) {
         res.status(500).json(err);
