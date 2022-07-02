@@ -1,22 +1,28 @@
-import { Add, Remove } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import StripeCheckout from "react-stripe-checkout";
+import { useNavigate, Link } from "react-router-dom";
+import { Add, Remove, DeleteForever } from "@mui/icons-material";
 
 import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import api from "../../api";
 import "./Cart.scss";
+import { useUser } from "../../hooks";
+import { removeProduct, clearProduct } from "../../redux/slices/cartSlice";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
+    const { user } = useUser();
 
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -29,7 +35,8 @@ const Cart = () => {
                     tokenId: stripeToken.id,
                     amount: 500,
                 });
-                console.log("res:", res);
+                dispatch(clearProduct({ user }));
+                toast.success("Checkout successfully!");
                 navigate("/success", {
                     state: {
                         stripeData: res,
@@ -42,10 +49,13 @@ const Cart = () => {
         };
         stripeToken && makeRequest();
     }, [stripeToken, cart, navigate]);
-    console.log("KEY", KEY);
-    console.log("stripeToken", stripeToken);
+
+    const handleDeleteProduct = (product) => {
+        dispatch(removeProduct({ product, user }));
+    };
     return (
         <div className="cart">
+            <Toaster position="top-center" reverseOrder={false} />
             <Navbar />
             <Announcement />
             <div className="wrapper">
@@ -62,7 +72,7 @@ const Cart = () => {
                     <div className="content">
                         {cart ? (
                             cart.products.map((product) => (
-                                <div className="product">
+                                <div key={product._id} className="product">
                                     <div className="product__details">
                                         <img
                                             src={product.img}
@@ -88,12 +98,21 @@ const Cart = () => {
                                     </div>
                                     <div className="price__details">
                                         <div className="price__details--amount">
-                                            <Remove />
+                                            {/* <Remove /> */}
                                             <p>{product.quantity}</p>
-                                            <Add />
+                                            <DeleteForever
+                                                onClick={() =>
+                                                    handleDeleteProduct(product)
+                                                }
+                                            />
                                         </div>
                                         <div className="price__details--price">
-                                            $ {product.price * product.quantity}
+                                            ${" "}
+                                            {product.sale
+                                                ? product.sale *
+                                                  product.quantity
+                                                : product.price *
+                                                  product.quantity}
                                         </div>
                                     </div>
                                 </div>

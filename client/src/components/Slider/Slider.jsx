@@ -1,4 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { sliderItems } from "../../data";
 import "./Slider.scss";
@@ -34,7 +35,9 @@ const Slider = () => {
                         <div className="slider__info">
                             <h1>{item.title}</h1>
                             <p>{item.desc}</p>
-                            <button>SHOW NOW</button>
+                            <Link to={`/products/new`}>
+                                <button>SHOW NOW</button>
+                            </Link>
                         </div>
                     </div>
                 ))}

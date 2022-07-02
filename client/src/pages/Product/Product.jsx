@@ -64,7 +64,10 @@ const Product = () => {
             navigate("/login");
         } else {
             dispatch(
-                addProduct({ product: { ...product, color, size, quantity } })
+                addProduct({
+                    product: { ...product, color, size, quantity },
+                    user,
+                })
             );
             notify();
             navigate("/cart");
@@ -107,7 +110,32 @@ const Product = () => {
                     </div>
                     <h4>Details: </h4>
                     <p>{product.desc}</p>
-                    <p className="price">$ {product.price}</p>
+                    <p className="price">
+                        <span
+                            className="product-sale"
+                            style={{
+                                color: "black",
+                                textDecoration: `${
+                                    product.sale ? "line-through" : "none"
+                                }`,
+                            }}
+                        >
+                            ${product.price}
+                        </span>
+                        {product.sale && (
+                            <span
+                                className="product-sale"
+                                style={{
+                                    marginLeft: 10,
+                                    fontWeight: 700,
+                                    fontSize: "26px",
+                                    color: "#f02d34",
+                                }}
+                            >
+                                ${product.sale}
+                            </span>
+                        )}
+                    </p>
                     <div className="filter-container">
                         <div className="filter">
                             <span className="title">Color</span>

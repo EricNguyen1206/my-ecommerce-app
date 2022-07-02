@@ -27,6 +27,7 @@ const Products = ({ cat, filters, sort, limit }) => {
                     item[key].includes(value)
                 )
             );
+            filterproducts.reverse();
             setFilteredProducts(filterproducts);
             setCount(Math.ceil(filterproducts.length / 8));
         }
@@ -56,7 +57,6 @@ const Products = ({ cat, filters, sort, limit }) => {
     const handlePageChange = (e, pg) => {
         setPage(pg);
     };
-
     return (
         <div
             className="products"
@@ -76,7 +76,7 @@ const Products = ({ cat, filters, sort, limit }) => {
                 className="pagination"
                 style={{
                     display: `${
-                        limit || productOnpage.length <= 8 ? "none" : "flex"
+                        limit || filteredProducts.length <= 8 ? "none" : "flex"
                     }`,
                     width: "100%",
                     marginTop: 20,

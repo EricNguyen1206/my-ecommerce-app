@@ -23,21 +23,26 @@ const ProductList = () => {
             [e.target.name]: value,
         });
     };
+
+    console.log("cat", cat);
     return (
         <div className="product-list">
             <Navbar />
             <Announcement />
-            <h1>{categories.find((item) => item.cat === cat).title}</h1>
+            <h1>
+                {cat !== "new" &&
+                    categories.find((item) => item.cat === cat).title}
+            </h1>
             <div className="filter-container">
                 <div className="filter">
                     <span>Filter Products:</span>
-                    <select name="color" onChange={handleFilters}>
+                    {/* <select name="color" onChange={handleFilters}>
                         <option disabled>Filter</option>
                         <option>t-shirt</option>
                         <option>pants</option>
                         <option>hoodie</option>
                         <option>shirt</option>
-                    </select>
+                    </select> */}
                     <select name="size" onChange={handleFilters}>
                         <option disabled>Size</option>
                         <option>XS</option>

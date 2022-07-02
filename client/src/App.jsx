@@ -32,7 +32,6 @@ function App() {
             });
         }
     };
-    console.log("user", user);
     return (
         <Router>
             <Suspense fallback={<Loader />}>

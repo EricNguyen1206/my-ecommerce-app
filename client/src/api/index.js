@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/";
+const BASE_URL = "https://my-ecom-app-nodejs.herokuapp.com/api/";
 const api = axios.create(
     { baseURL: BASE_URL },
     { headers: { "Content-Type": "application/json" } }
@@ -43,15 +43,14 @@ const productsAPI = {
 };
 
 const cartAPI = {
-    update(cart) {
-        const user = JSON.parse(localStorage.getItem("user"));
+    async update(cart, user) {
         const JWTToken = user.accessToken;
         const userId = user.user._id;
         const url = `/carts/${userId}`;
         cart.userId = userId;
-        return api.put(url, {
+        console.log("cart", cart);
+        return await api.put(url, cart, {
             headers: { authorization: `Bearer ${JWTToken}` },
-            body: JSON.stringify(cart),
         });
     },
     async checkUserCart(user) {
@@ -63,16 +62,17 @@ const cartAPI = {
         });
         return res;
     },
-    create(cart, userId, JWTToken) {
+    async create(cart, user) {
+        const JWTToken = user.accessToken;
+        const userId = user.user._id;
         const url = "/carts";
         cart.userId = userId;
-        return api.post(
-            url,
-            {
-                headers: { authorization: `Bearer ${JWTToken}` },
-            },
-            cart
-        );
+        console.log("cart", cart);
+
+        const res = await api.post(url, cart, {
+            headers: { authorization: `Bearer ${JWTToken}` },
+        });
+        return res;
     },
     delete() {
         const user = JSON.parse(localStorage.getItem("user"));
