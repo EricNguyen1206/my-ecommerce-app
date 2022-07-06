@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../styles/" as *;
 .announcement {
     height: 30px;
     background-color: $primary;
@@ -8,4 +8,7 @@
     justify-content: center;
     font-size: 14px;
     font-weight: 500;
+    @include mobile {
+        font-size: .8rem;
+    }
 }

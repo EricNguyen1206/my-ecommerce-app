@@ -1,19 +1,20 @@
-@import '../../App.scss';
+@use "../../styles/" as *;
 .navbar {
     height: 60px;
+    display: flex;
+    justify-content:center;
     @include mobile {
         height: 50px;
     }
     .wrapper {
-        padding: 10px 20px;
+        width: 100%;
+        max-width: 1200px;
+        height: inherit;
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        @include mobile {
-            padding: 10px 0px;
-        }
+        align-items: center;
         .left {
-            flex: 1;
+            height: 100%;
             a {
                 text-decoration: none;
                 color: #000000;
@@ -30,7 +31,7 @@
         }
     
         .center {
-            flex: 1;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -62,7 +63,7 @@
         }
     
         .right {
-            flex: 1;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -84,7 +85,7 @@
             a {
                 text-decoration: none;
                 color: $secondary;
-
+    
                 .menu-items {
                     position: relative;
                     font-size: 1.2rem;

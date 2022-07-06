@@ -6,6 +6,7 @@ import { useUser } from "./hooks";
 import { publicRoutes, userRoutes } from "./routes";
 import { Loader, PageNotFound } from "./components";
 import { loadUser, checkCart } from "./redux/actions";
+import "./App.scss";
 
 function App() {
     const { user } = useUser();

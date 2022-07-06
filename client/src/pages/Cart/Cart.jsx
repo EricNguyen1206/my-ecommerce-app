@@ -56,8 +56,8 @@ const Cart = () => {
     return (
         <div className="cart">
             <Toaster position="top-center" reverseOrder={false} />
-            <Navbar />
             <Announcement />
+            <Navbar />
             <div className="wrapper">
                 <h1>YOUR BAG</h1>
                 <div className="top">

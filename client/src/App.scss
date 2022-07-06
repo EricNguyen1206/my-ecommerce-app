@@ -1,25 +1,25 @@
 /* Mixin */
-$mobile-width: 480px; 
-$tablet-width: 768px; 
-$desktop-width: 1024px;
+@use "./styles/" as *;
 
-@mixin mobile { @media (max-width: #{$mobile-width - 1px}) {     
-    @content;   
-  } 
-}  
-
-@mixin tablet { @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {       
-    @content;   
-  }
-}  
-
-@mixin desktop { @media (min-width: #{$desktop-width}) {     
-    @content;
-  } 
+* {
+  margin: 0;
+  padding: 0;
+  font-family: $font_family;
+  box-sizing: inherit;
 }
 
-/* Theme */
-$primary: #f02d34;
-$primary-light: #fcf5f5;
-$secondary: #324d67;
-$green: #31a831;
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+body {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}

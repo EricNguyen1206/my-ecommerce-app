@@ -1,19 +1,23 @@
+import React, { Suspense } from "react";
 import {
     Announcement,
     Navbar,
-    Slider,
+    Banner,
     Categories,
     Products,
     Newsletter,
     Footer,
+    Slider,
 } from "../../components";
 
+// const Slider = React.lazy(() => import("../../components/Slider/Slider"));
 const Home = () => {
     return (
         <div className="home">
             <Announcement />
             <Navbar />
-            <Slider />
+            <Banner />
+            <Slider cat="new" />
             <Categories />
             <Products limit={8} />
             <Newsletter />

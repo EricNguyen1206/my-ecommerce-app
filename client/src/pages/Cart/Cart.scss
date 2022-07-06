@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../styles/" as *;
 .cart {
     .wrapper {
         padding: 20px;

@@ -1,4 +1,8 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
+import Avatar from "@mui/material/Avatar";
+import Fab from "@mui/material/Fab";
+import Badge from "@mui/material/Badge";
+import { deepOrange } from "@mui/material/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -17,7 +21,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="navbar">
+        <section className="navbar">
             <div className="wrapper">
                 <div className="left">
                     <Link to="/">
@@ -53,9 +57,14 @@ const Navbar = () => {
                             </Link>
                         </>
                     )}
+                    <Avatar
+                        sx={{ bgcolor: deepOrange[500], width: 32, height: 32 }}
+                    >
+                        N
+                    </Avatar>
                     <Link to="/cart">
                         <div className="menu-items">
-                            <span
+                            {/* <span
                                 className="badge"
                                 style={{
                                     display: `${
@@ -64,13 +73,17 @@ const Navbar = () => {
                                 }}
                             >
                                 {quantity}
-                            </span>
-                            <ShoppingCartOutlined />
+                            </span> */}
+                            <Fab color="primary" size="small" aria-label="add">
+                                <Badge badgeContent={quantity} color="primary">
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            </Fab>
                         </div>
                     </Link>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
