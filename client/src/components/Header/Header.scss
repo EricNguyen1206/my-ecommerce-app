@@ -1,4 +1,4 @@
-@use "../../styles/" as *;
+@use "../../common/styles/" as *;
 .navbar {
     height: 60px;
     display: flex;
@@ -19,6 +19,7 @@
                 text-decoration: none;
                 color: #000000;
                 .logo {
+                    font-size: 4rem;
                     font-weight: bold;
                     margin: 0;
                     color: $primary;
@@ -73,10 +74,10 @@
             }
             .logout {
                 position: relative;
-                font-size: 1.2rem;
+                font-size: 2rem;
                 font-weight: 400;
                 cursor: pointer;
-                margin-left: 25px;
+                margin-right: 25px;
                 color: $secondary;
                 &:hover {
                     color: $primary;
@@ -88,7 +89,7 @@
     
                 .menu-items {
                     position: relative;
-                    font-size: 1.2rem;
+                    font-size: 2rem;
                     font-weight: 400;
                     cursor: pointer;
                     margin-left: 25px;

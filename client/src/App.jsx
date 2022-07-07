@@ -1,16 +1,25 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect, Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { useUser } from "./hooks";
+import { useUser, useMode } from "./hooks";
 import { publicRoutes, userRoutes } from "./routes";
 import { Loader, PageNotFound } from "./components";
 import { loadUser, checkCart } from "./redux/actions";
+import { createTheme, ThemeProvider } from "@mui/material";
+import palette from "./common/mui/_palette";
 import "./App.scss";
 
 function App() {
     const { user } = useUser();
     const dispatch = useDispatch();
+    const { mode } = useMode();
+
+    const darkTheme = createTheme({
+        palette: {
+            mode: mode,
+        },
+    });
     useEffect(() => {
         dispatch(loadUser.loadUserRequest());
     }, [dispatch]);
@@ -27,7 +36,13 @@ function App() {
                         key={index}
                         exact={item.exact}
                         path={item.path}
-                        element={item.element}
+                        element={
+                            <ThemeProvider theme={darkTheme}>
+                                <ThemeProvider theme={palette()}>
+                                    {item.element}
+                                </ThemeProvider>
+                            </ThemeProvider>
+                        }
                     />
                 );
             });

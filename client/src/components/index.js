@@ -1,7 +1,7 @@
 import Announcement from "./Announcement/Announcement";
 import Categories from "./Categories/Categories";
 import Footer from "./Footer/Footer";
-import Navbar from "./Navbar/Navbar";
+import Header from "./Header/Header";
 import Slider from "./Slider/Slider";
 import Newsletter from "./Newsletter/Newsletter";
 import Products from "./Products/Products";
@@ -13,7 +13,7 @@ export {
     Announcement,
     Categories,
     Footer,
-    Navbar,
+    Header,
     Slider,
     Newsletter,
     Products,

@@ -3,12 +3,22 @@ import { Add, Remove, Star, StarHalf } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { styled } from "@mui/material";
 
 import "./Product.scss";
 import { productsAPI } from "../../api";
-import { Announcement, Footer, Navbar, Newsletter } from "../../components";
+import { Announcement, Footer, Header, Newsletter } from "../../components";
 import { useUser } from "../../hooks";
 import { addProduct } from "../../redux/slices/cartSlice";
+import { Stack, Typography } from "@mui/material";
+
+const ListStar = styled(Stack)(({ theme }) => ({
+    color: theme.palette.warning.light,
+}));
+
+const Subtitle = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primary,
+}));
 
 const Product = () => {
     const location = useLocation();
@@ -75,7 +85,7 @@ const Product = () => {
     };
     return (
         <div className="product-page">
-            <Navbar />
+            <Header />
             <Toaster position="top-center" reverseOrder={false} />
             <Announcement />
             <div className="product-detail-container">
@@ -99,17 +109,19 @@ const Product = () => {
                 <div className="product-detail-desc">
                     <h1>{product.title}</h1>
                     <div className="reviews">
-                        <div>
+                        <ListStar direction="row">
                             <Star />
                             <Star />
                             <Star />
                             <Star />
                             <StarHalf />
-                        </div>
+                        </ListStar>
                         <p>(20)</p>
                     </div>
                     <h4>Details: </h4>
-                    <p>{product.desc}</p>
+                    <Subtitle variant="subtitle1" components="p" fontSize={14}>
+                        {product.desc}
+                    </Subtitle>
                     <p className="price">
                         <span
                             className="product-sale"

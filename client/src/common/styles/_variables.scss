@@ -1,11 +1,11 @@
 /* Theme */
-$primary: #f02d34;
+$primary: hsl(210, 79%, 42%);
 $primary-light: #fcf5f5;
-$secondary: #324d67;
+$secondary: hsl(290, 64%, 42%);
 $green: #31a831;
 $container_bg: #1a1a1a;
 $text_color: #f1faee;
-$main_color: #ff002b;
+$main_color: hsl(350, 100%, 50%);
 
 $header_height: 100px;
 $header_mb_height: 70px;
@@ -17,3 +17,4 @@ $border_radius: 30px;
 $box_shadow: 0px 15px 27px 0px rgba(62,66,66,0.22);
 
 $font_family: 'Montserrat', sans-serif;
+

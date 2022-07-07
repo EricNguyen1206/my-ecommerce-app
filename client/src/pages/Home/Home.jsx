@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
+import { Box, ThemeProvider, createTheme } from "@mui/material";
 import {
     Announcement,
-    Navbar,
+    Header,
     Banner,
     Categories,
     Products,
@@ -9,20 +9,28 @@ import {
     Footer,
     Slider,
 } from "../../components";
+import { useMode } from "../../hooks";
 
-// const Slider = React.lazy(() => import("../../components/Slider/Slider"));
 const Home = () => {
+    const { mode } = useMode();
+    const darkTheme = createTheme({
+        palette: {
+            mode: mode,
+        },
+    });
     return (
-        <div className="home">
-            <Announcement />
-            <Navbar />
-            <Banner />
-            <Slider cat="new" />
-            <Categories />
-            <Products limit={8} />
-            <Newsletter />
-            <Footer />
-        </div>
+        <ThemeProvider theme={darkTheme}>
+            <Box bgcolor={"background.default"} color={"text.primary"}>
+                <Announcement />
+                <Header />
+                <Banner />
+                <Slider cat="new" />
+                <Categories />
+                <Products limit={8} />
+                <Newsletter />
+                <Footer />
+            </Box>
+        </ThemeProvider>
     );
 };
 

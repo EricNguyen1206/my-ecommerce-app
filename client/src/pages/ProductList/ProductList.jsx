@@ -6,7 +6,7 @@ import "./ProductList.scss";
 import {
     Announcement,
     Footer,
-    Navbar,
+    Header,
     Newsletter,
     Products,
 } from "../../components";
@@ -15,7 +15,13 @@ const ProductList = () => {
     const [sort, setSort] = useState("newest");
     const location = useLocation();
     const cat = location.pathname.split("/")[2];
-
+    useEffect(() => {
+        window.scrollTo({
+            top: 100,
+            left: 100,
+            behavior: "smooth",
+        });
+    }, []);
     const handleFilters = (e) => {
         const value = e.target.value;
         setFilters({
@@ -27,7 +33,7 @@ const ProductList = () => {
     console.log("cat", cat);
     return (
         <div className="product-list">
-            <Navbar />
+            <Header />
             <Announcement />
             <h1>
                 {cat !== "new" &&
