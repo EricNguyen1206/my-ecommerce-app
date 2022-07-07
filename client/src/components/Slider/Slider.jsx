@@ -1,56 +1,49 @@
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { sliderItems } from "../../data";
+import React, { useEffect, useState, Suspense } from "react";
+import { useSelector } from "react-redux";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Lazy, Autoplay } from "swiper";
+
+import { productsAPI } from "../../api";
+import Product from "../Product/Product";
+
+import "swiper/css";
 import "./Slider.scss";
 
-const Slider = () => {
-    const [slideindex, setSlideindex] = useState(0);
-    const handleClick = (direction) => {
-        if (direction === "left") {
-            setSlideindex(slideindex > 0 ? slideindex - 1 : 2);
-        } else {
-            setSlideindex(slideindex < 2 ? slideindex + 1 : 0);
-        }
-    };
-
+// const Product = React.lazy(() => import("../Product/Product"));
+export default React.memo(function Slider({ cat, title = "Product" }) {
+    const products = useSelector((state) => state.products.products);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    useEffect(() => {
+        const fetchProducts = async (cat) => {
+            const res = await productsAPI.getByCategories(cat);
+            setFilteredProducts(res);
+        };
+        cat ? fetchProducts(cat) : setFilteredProducts(products);
+    }, [cat, products]);
     return (
-        <div className="slider">
-            <div className="arrow left" onClick={() => handleClick("left")}>
-                <ArrowLeftOutlined />
-            </div>
-            <div
-                className="slider__wrapper"
-                style={{ transform: `translateX(${slideindex * -100}vw)` }}
+        <section className="section slider">
+            <h2 className="section-title">{title}</h2>
+            <Swiper
+                slidesPerView={"auto"}
+                spaceBetween={30}
+                slidesPerGroup={2}
+                speed={4000}
+                loop={true}
+                modules={[Autoplay, Lazy]}
+                autoplay={{
+                    delay: 2000,
+                }}
             >
-                {sliderItems.map((item) => (
-                    <div
-                        className="slider__content"
-                        key={item.id}
-                        style={{ backgroundColor: `#${item.bg}` }}
-                    >
-                        <div className="image-container">
-                            <img src={item.img} alt="sliderimg" />
-                        </div>
-                        <div className="slider__info">
-                            <h1>{item.title}</h1>
-                            <p>{item.desc}</p>
-                            <Link to={`/products/new`}>
-                                <button>SHOW NOW</button>
-                            </Link>
-                        </div>
-                    </div>
+                {filteredProducts.map((item, index) => (
+                    <SwiperSlide key={index}>
+                        <Product item={item} />
+                    </SwiperSlide>
                 ))}
-            </div>
-            <div
-                className="arrow right"
-                direction="right"
-                onClick={() => handleClick("right")}
-            >
-                <ArrowRightOutlined />
-            </div>
-        </div>
+                {/* Prevent empty items in swiper */}
+                <SwiperSlide>
+                    <></>
+                </SwiperSlide>
+            </Swiper>
+        </section>
     );
-};
-
-export default Slider;
+});

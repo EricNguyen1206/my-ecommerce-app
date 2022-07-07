@@ -1,37 +1,42 @@
-@import "../../App.scss";
-.product-card{
-    position: relative;
-    cursor: pointer;
-    transform: scale(1, 1);
-    transition: transform 0.5s ease;
-    color: #324d67;
-    &:hover{
-        transform: scale(1.1,1.1)
-    }
-    .product-image{
-        border-radius: 15px;
-        background-color: #ebebeb;
+@use "../../common/styles/" as *;
+.product {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    .product-card{
+        position: relative;
+        cursor: pointer;
         transform: scale(1, 1);
         transition: transform 0.5s ease;
-    }
-    .product-name{
-        font-weight: 500;
-    }
-    .product-price{
-        font-weight: 800;
-        margin-top: 6px;
-        color: black;
-    }
-    .new {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 60px;
-        height: 30px;
-        margin: 0;
-        color: white;
-        background-color: #f02d34;
-        text-align: center;
-        border-radius: 0 15px 0 15px;
+        color: #324d67;
+        &:hover{
+            transform: scale(1.1,1.1)
+        }
+        .product-image{
+            border-radius: 15px;
+            background-color: #ebebeb;
+            transform: scale(1, 1);
+            transition: transform 0.5s ease;
+        }
+        .product-name{
+            font-weight: 500;
+        }
+        .product-price{
+            font-weight: 800;
+            margin-top: 6px;
+            color: black;
+        }
+        .new {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 30px;
+            margin: 0;
+            color: white;
+            background-color: #f02d34;
+            text-align: center;
+            border-radius: 0 15px 0 15px;
+        }
     }
 }

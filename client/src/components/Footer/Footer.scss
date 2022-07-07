@@ -1,9 +1,10 @@
-@import '../../App.scss';
+@use "../../common/styles/" as *;
 .footer {
     display: flex;
     color: black;
+    flex-direction: row;
     @include mobile {
-        flex-direction: "column";
+        flex-direction: column;
     }
 
     .left {
@@ -41,18 +42,15 @@
         @include mobile {
             display: none;
         }
-
         h3 {
             margin-bottom: 30px;
         }
-
         ul {
             margin: 0;
             padding: 0;
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-
             li {
                 width: 50%;
                 margin-bottom: 10px;
@@ -66,17 +64,14 @@
         @include mobile {
             background-color: "#fff8f8"
         }
-
         h3 {
             margin-bottom: 30px;
         }
-
         .contact-items {
             margin-bottom: 20px;
             display: flex;
             align-items: center;
         }
-
         .payment {
             width: 50%;
         }

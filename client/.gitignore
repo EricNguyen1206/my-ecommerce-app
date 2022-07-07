@@ -9,6 +9,9 @@
 /coverage
 jwt.http
 
+# environment
+.env
+
 # production
 /build
 

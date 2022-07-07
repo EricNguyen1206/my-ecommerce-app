@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@use "../../common/styles/" as *;
 .category-item {
     flex: 1;
     margin: 3px;
@@ -9,7 +9,7 @@
         height: 100%;
         object-fit: cover;
         @include mobile {
-            height: 20vh;
+            height: 40vh;
         }
     }
     .category-item__info {

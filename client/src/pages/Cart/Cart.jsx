@@ -8,7 +8,7 @@ import { Add, Remove, DeleteForever } from "@mui/icons-material";
 
 import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
-import Navbar from "../../components/Navbar/Navbar";
+import Header from "../../components/Header/Header";
 import api from "../../api";
 import "./Cart.scss";
 import { useUser } from "../../hooks";
@@ -56,8 +56,8 @@ const Cart = () => {
     return (
         <div className="cart">
             <Toaster position="top-center" reverseOrder={false} />
-            <Navbar />
             <Announcement />
+            <Header />
             <div className="wrapper">
                 <h1>YOUR BAG</h1>
                 <div className="top">

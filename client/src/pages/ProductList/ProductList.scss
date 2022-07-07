@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../common/styles/" as *;
 .product-list {
     color: $secondary;
     h1 {
