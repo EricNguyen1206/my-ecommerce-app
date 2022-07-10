@@ -23,7 +23,7 @@ const Newsletter = () => {
             </SectionSubtitle>
             <div className="contact">
                 <input placeholder="Your email" />
-                <Button>
+                <Button >
                     <Send />
                 </Button>
             </div>
