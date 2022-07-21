@@ -1,177 +1,331 @@
-// import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import {
-    Avatar,
-    Autocomplete,
-    Badge,
-    TextField,
-    Button,
-    AppBar,
-    styled,
-    Toolbar,
-    Box,
-    Stack,
-    Typography,
-    MenuItem,
-    Menu,
-    Switch,
-} from "@mui/material";
-// import { makeStyles } from "@material-ui/core/styles";
-import { Shop, ShoppingCart } from "@mui/icons-material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
-import "./Header.scss";
-import { useUser } from "../../hooks";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import PersonIcon from "@mui/icons-material/Person";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { logout } from "../../redux/slices/userSlice";
-import { categories } from "../../utils/data";
-import { changeMode } from "../../redux/slices/modeSlice";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Badge, styled } from "@mui/material";
+import { useUser } from "../../hooks";
+import { useMemo } from "react";
+import { useDispatch } from "react-redux";
 
 const StyledToolbar = styled(Toolbar)({
-    display: "flex",
-    justifyContent: "space-between",
+    height: "4.5rem",
+    minHeight: "45px",
 });
 
-const Search = styled(Box)(({ theme }) => ({
-    width: "40%",
-}));
-
-const SearchContent = styled(Stack)(({ theme }) => ({
-    backgroundColor: theme.palette.background.default,
-    padding: "4px",
-}));
-
-const SearchButton = styled(Button)(({ theme }) => ({
-    height: 100,
-    display: "block",
-    borderRadius: "0 4px 4px 0",
-    backgroundColor: theme.palette.primary.main,
-}));
-
-const Icons = styled(Box)(({ theme }) => ({
-    display: "none",
-    alignItems: "center",
-    gap: "20px",
-    [theme.breakpoints.up("sm")]: {
-        display: "flex",
-    },
-}));
-
-const UserBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    [theme.breakpoints.up("sm")]: {
-        display: "none",
-    },
-}));
-const Navbar = () => {
+const Header = () => {
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const { user } = useUser();
     const dispatch = useDispatch();
-    const user = useUser();
-    const quantity = useSelector((state) => state.cart.quantity);
-    const [open, setOpen] = useState(false);
-    const handleLogout = (e) => {
-        e.preventDefault();
-        dispatch(logout());
+    const navigate = useNavigate();
+    const pages = ["men", "women", "kids"];
+    const settings = useMemo(
+        () => (user ? ["profile", "logout"] : ["login", "register"]),
+        [user]
+    );
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
     };
-    const handleChangeMode = (e) => {
-        dispatch(changeMode());
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
     };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    const handleSettingsMenu = (action) => {
+        console.log("action", action);
+        switch (action) {
+            case "profile":
+                return handleCloseUserMenu();
+            case "logout":
+                return dispatch(logout());
+            case "login":
+                return navigate("/login");
+            case "register":
+                return navigate("/register");
+            default:
+                return handleCloseUserMenu();
+        }
+    };
+
     return (
-        <AppBar position="sticky" style={{ zIndex: 100 }}>
-            <StyledToolbar>
-                <Link to="/">
-                    <Typography
-                        variant="h2"
+        <AppBar position="sticky">
+            <Container maxWidth="xl">
+                <StyledToolbar disableGutters variant="dense">
+                    <Box
                         sx={{
-                            display: { xs: "none", sm: "block" },
-                            color: "white",
-                            cursor: "pointer",
+                            flex: 0,
+                            mr: 2,
+                            display: { xs: "none", md: "flex" },
                         }}
-                        color="white"
-                        fontWeight={600}
                     >
-                        ERIC.
-                    </Typography>
-                </Link>
-                <Shop sx={{ display: { xs: "block", sm: "none" } }} />
-                <Search sx={{ display: { xs: "none", sm: "block" } }}>
-                    <SearchContent
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Autocomplete
-                            disablePortal
-                            options={categories}
-                            sx={{
-                                width: "100%",
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                    borderRadius: "4px 0 0 4px",
-                                },
-                            }}
-                            renderInput={(params) => (
-                                <TextField {...params} label="Categories" />
-                            )}
-                        />
-                        <SearchButton variant="contained" sx={{ height: 48 }}>
-                            <SearchIcon sx={{ fontSize: 20 }} />
-                        </SearchButton>
-                    </SearchContent>
-                </Search>
-                <Icons>
-                    <Switch onChange={handleChangeMode} color="secondary" />
-                    <Link to="/cart" style={{ color: "white" }}>
-                        <Badge
-                            badgeContent={quantity}
-                            color="error"
-                            sx={{ "& .MuiBadge-badge": { fontSize: 10 } }}
+                        <Link to="/">
+                            <Typography
+                                component="div"
+                                sx={{
+                                    display: "flex",
+                                    color: "white",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <AdbIcon
+                                    sx={{
+                                        display: { xs: "none", md: "flex" },
+                                        mr: 1,
+                                        fontSize: "2.8rem",
+                                    }}
+                                />
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        display: "block",
+                                        fontFamily: "monospace",
+                                        fontWeight: 700,
+                                        letterSpacing: ".3rem",
+                                        textDecoration: "none",
+                                    }}
+                                >
+                                    UrBRAND
+                                </Typography>
+                            </Typography>
+                        </Link>
+                    </Box>
+
+                    <Box sx={{ flex: 0, display: { xs: "flex", md: "none" } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
                         >
-                            <ShoppingCart sx={{ fontSize: 28 }} />
-                        </Badge>
-                    </Link>
-                    <Avatar
-                        sx={{ width: 30, height: 30 }}
-                        src=""
-                        onClick={(e) => setOpen(true)}
-                    />
-                </Icons>
-                <UserBox onClick={(e) => setOpen(true)}>
-                    <Avatar sx={{ width: 30, height: 30 }} src="" />
-                    <Typography variant="span">John</Typography>
-                </UserBox>
-            </StyledToolbar>
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                open={open}
-                onClose={(e) => setOpen(false)}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-            >
-                <MenuItem>Profile</MenuItem>
-                {user.user ? (
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                ) : (
-                    <>
-                        <Link to="/register">
-                            <MenuItem>Register</MenuItem>
+                            <MenuIcon sx={{ fontSize: "2.4rem" }} />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "left",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: "block", md: "none" },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography textAlign="center">
+                                        <Link
+                                            to={`/products/${page}`}
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                            }}
+                                        >
+                                            <li
+                                                key={page}
+                                                style={{
+                                                    margin: "0 10px",
+                                                    fontSize: "2rem",
+                                                    textTransform: "capitalize",
+                                                }}
+                                            >
+                                                {page}
+                                            </li>
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+
+                    <Box sx={{ flex: 1, display: { xs: "flex", md: "none" } }}>
+                        <Link
+                            to="/"
+                            style={{
+                                color: "white",
+                                textDecoration: "none",
+                                display: "flex",
+                            }}
+                        >
+                            <AdbIcon
+                                sx={{
+                                    mr: 1,
+                                    fontSize: "2.4rem",
+                                }}
+                            />
+                            <Typography
+                                variant="h4"
+                                noWrap
+                                component="span"
+                                sx={{
+                                    flexGrow: 1,
+                                    fontFamily: "monospace",
+                                    fontWeight: 700,
+                                    letterSpacing: ".3rem",
+                                    color: "inherit",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                UrBRAND
+                            </Typography>
                         </Link>
-                        <Link to="/login">
-                            <MenuItem>Login</MenuItem>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            flex: 1,
+                            display: { xs: "none", md: "flex" },
+                            listStyle: "none",
+                            justifyContent: "center",
+                        }}
+                        component="ul"
+                    >
+                        {pages.map((page) => (
+                            <Link
+                                to={`/products/${page}`}
+                                style={{
+                                    textDecoration: "none",
+                                    color: "white",
+                                }}
+                            >
+                                <li
+                                    key={page}
+                                    style={{
+                                        margin: "0 10px",
+                                        fontSize: "2rem",
+                                        textTransform: "capitalize",
+                                    }}
+                                >
+                                    {page}
+                                </li>
+                            </Link>
+                        ))}
+                    </Box>
+
+                    <Box sx={{ flexGrow: 0 }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenUserMenu}
+                            color="inherit"
+                        >
+                            <PersonIcon
+                                sx={{
+                                    fontSize: {
+                                        xs: "2.4rem",
+                                        md: "2.8rem",
+                                    },
+                                }}
+                            />
+                        </IconButton>
+
+                        <Link
+                            to="/cart"
+                            style={{ color: "white", textDecoration: "none" }}
+                        >
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                color="inherit"
+                                sx={{ paddingLeft: { xs: "0", md: "12px" } }}
+                            >
+                                <Badge
+                                    sx={{
+                                        "& .MuiBadge-badge": {
+                                            fontSize: 9,
+                                            height: "16px",
+                                            minWidth: "16px",
+                                            padding: 0,
+                                        },
+                                    }}
+                                    badgeContent={0}
+                                    color="error"
+                                    showZero
+                                >
+                                    <ShoppingCart
+                                        sx={{
+                                            fontSize: {
+                                                xs: "2.4rem",
+                                                md: "2.8rem",
+                                            },
+                                        }}
+                                    />
+                                </Badge>
+                            </IconButton>
                         </Link>
-                    </>
-                )}
-            </Menu>
+
+                        <Menu
+                            id="menu-setting"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem
+                                    key={setting}
+                                    onClick={() => handleSettingsMenu(setting)}
+                                >
+                                    <Typography
+                                        textAlign="center"
+                                        sx={{
+                                            textTransform: "uppercase",
+                                            fontSize: "2rem",
+                                        }}
+                                    >
+                                        {setting}
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                </StyledToolbar>
+            </Container>
         </AppBar>
     );
 };
-
-export default Navbar;
+export default Header;
