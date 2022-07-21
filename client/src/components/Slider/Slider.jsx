@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Lazy, Autoplay } from "swiper";
@@ -9,7 +9,6 @@ import Product from "../Product/Product";
 import "swiper/css";
 import "./Slider.scss";
 
-// const Product = React.lazy(() => import("../Product/Product"));
 export default React.memo(function Slider({ cat, title = "Product" }) {
     const products = useSelector((state) => state.products.products);
     const [filteredProducts, setFilteredProducts] = useState([]);

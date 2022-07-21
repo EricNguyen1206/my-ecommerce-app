@@ -1,12 +1,12 @@
-import { Box, ThemeProvider, createTheme } from "@mui/material";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
 import {
     Announcement,
-    Header,
     Banner,
     Categories,
-    Products,
-    Newsletter,
     Footer,
+    Header,
+    Newsletter,
+    Products,
     Slider,
 } from "../../components";
 import { useMode } from "../../hooks";

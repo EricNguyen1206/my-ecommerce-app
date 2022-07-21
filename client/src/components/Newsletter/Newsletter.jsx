@@ -1,8 +1,13 @@
 import { Send } from "@mui/icons-material";
 import { Container, Typography, styled, Button } from "@mui/material";
+import PrimaryButton from "../../common/mui/components/PrimaryButton";
 
 const Section = styled(Container)(({ theme }) => ({
     backgroundColor: theme.palette.background,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
 }));
 const SectionTitle = styled(Typography)(({ theme }) => ({
     fontSize: 20,
@@ -14,7 +19,7 @@ const SectionSubtitle = styled(Typography)(({ theme }) => ({
 }));
 const Newsletter = () => {
     return (
-        <Section sx={{ height: "50%", width: "100%" }}>
+        <Section sx={{ height: "500px", width: "100%" }}>
             <SectionTitle variant="h1" components="h2">
                 Newsletter
             </SectionTitle>
@@ -23,9 +28,9 @@ const Newsletter = () => {
             </SectionSubtitle>
             <div className="contact">
                 <input placeholder="Your email" />
-                <Button >
+                <PrimaryButton>
                     <Send />
-                </Button>
+                </PrimaryButton>
             </div>
         </Section>
     );
