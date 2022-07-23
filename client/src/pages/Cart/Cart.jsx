@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate, Link } from "react-router-dom";
-import { Add, Remove, DeleteForever } from "@mui/icons-material";
+import { DeleteForever } from "@mui/icons-material";
 
 import Announcement from "../../components/Announcement/Announcement";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import api from "../../api";
+import { transactionApi } from "../../api";
 import "./Cart.scss";
 import { useUser } from "../../hooks";
 import { removeProduct, clearProduct } from "../../redux/slices/cartSlice";
@@ -31,7 +31,7 @@ const Cart = () => {
     useEffect(() => {
         const makeRequest = async () => {
             try {
-                const res = await api.post("/checkout/payment", {
+                const res = await transactionApi.checkout({
                     tokenId: stripeToken.id,
                     amount: 500,
                 });
@@ -48,7 +48,7 @@ const Cart = () => {
             }
         };
         stripeToken && makeRequest();
-    }, [stripeToken, cart, navigate]);
+    }, [stripeToken, cart, navigate, dispatch, user]);
 
     const handleDeleteProduct = (product) => {
         dispatch(removeProduct({ product, user }));

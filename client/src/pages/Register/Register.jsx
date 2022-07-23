@@ -19,12 +19,14 @@ const Register = () => {
     const handleClick = (e) => {
         e.preventDefault();
         if (username && email && password && password === confirm) {
-            try {
-                const res = signup({ username, email, password });
-                toast.success("Register successfully. Let's shopping!");
-            } catch (err) {
-                toast.error("Register fail. Please try again!");
-            }
+            signup({ username, email, password })
+                .then((res) => {
+                    console.log("res", res);
+                    toast.success("Register successfully. Let's shopping!");
+                })
+                .catch((err) => {
+                    toast.error("Register fail. Please try again!");
+                });
             navigate("/");
         } else {
             toast.error("Invalid information, check input again!");

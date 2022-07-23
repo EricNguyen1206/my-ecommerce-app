@@ -7,14 +7,13 @@ import {
     checkCart,
     getType,
 } from "./actions";
-import { productsAPI, authApi, cartAPI } from "../api";
+import { productsApi, authApi, cartApi } from "../api";
 
 function* fetchProductsSaga() {
     try {
-        const products = yield call(productsAPI.getAll);
+        const products = yield call(productsApi.getAll);
         yield put(getProducts.success(products));
     } catch (err) {
-        console.error(err);
         yield put(getProducts.failure(err));
     }
 }
@@ -22,37 +21,30 @@ function* fetchProductsSaga() {
 function* fetchProductsByCatSaga(action) {
     try {
         const products = yield call(
-            productsAPI.getByCategories,
+            productsApi.getByCategories,
             action.payload
         );
         yield put(getProductsByCategory.getProductsByCategorySuccess(products));
     } catch (err) {
-        console.error(err);
         yield put(getProductsByCategory.getProductsByCategoryFailure(err));
     }
 }
 
 function* loginSaga(action) {
-    console.log("action");
     try {
         const user = yield call(authApi.login, action.payload);
         yield put(login.loginSuccess(user));
     } catch (err) {
-        console.error(err);
         yield put(login.loginFailure(err));
     }
 }
 
-/**
- *
- * @param {user} action
- * load user cart if user have buy somethings
- * in otherhand cart is empty
- */
 function* chechCartSaga(action) {
     try {
-        const cart = yield call(cartAPI.checkUserCart, action.payload);
-        yield put(checkCart.checkCartSuccess(cart));
+        let cart = yield call(cartApi.checkUserCart, action.payload);
+        cart
+            ? yield put(checkCart.checkCartSuccess(cart))
+            : yield put(checkCart.checkCartFailure());
     } catch (err) {
         yield put(checkCart.checkCartFailure(err));
     }
@@ -63,7 +55,7 @@ function* loadUserSaga(action) {
     if (user) {
         try {
             const newToken = yield call(authApi.refreshToken);
-            user.accessToken = newToken;
+            user.accessToken = newToken.accessToken;
         } catch (err) {
             yield put(loadUser.loadUserFailure());
         }
@@ -83,7 +75,6 @@ function* watcherSaga() {
         fetchProductsByCatSaga
     );
     yield takeLatest(getType(checkCart.checkCartRequest), chechCartSaga);
-    // yield takeLatest(getType(addToCart.addToCartRequest), addToCartSaga);
 }
 
 export default watcherSaga;

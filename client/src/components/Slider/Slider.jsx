@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Lazy, Autoplay } from "swiper";
 
-import { productsAPI } from "../../api";
+import { productsApi } from "../../api";
 import Product from "../Product/Product";
 
 import "swiper/css";
@@ -13,9 +13,10 @@ export default React.memo(function Slider({ cat, title = "Product" }) {
     const products = useSelector((state) => state.products.products);
     const [filteredProducts, setFilteredProducts] = useState([]);
     useEffect(() => {
-        const fetchProducts = async (cat) => {
-            const res = await productsAPI.getByCategories(cat);
-            setFilteredProducts(res);
+        const fetchProducts = (cat) => {
+            productsApi.getByCategories(cat).then((res) => {
+                setFilteredProducts(res);
+            });
         };
         cat ? fetchProducts(cat) : setFilteredProducts(products);
     }, [cat, products]);

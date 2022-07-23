@@ -7,3 +7,7 @@ export const useUser = () => {
 export const useMode = () => {
     return useSelector((state) => state.mode);
 };
+
+export const useCart = () => {
+    return useSelector((state) => state.cart);
+};
