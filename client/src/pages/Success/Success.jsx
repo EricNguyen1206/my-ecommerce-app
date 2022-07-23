@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 
 import { clearProduct } from "../../redux/slices/cartSlice";
-import api from "../../api";
+import { transactionApi } from "../../api";
 
 const Success = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
     const data = location.state.stripeData;
     const cart = location.state.cart;
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -17,7 +16,7 @@ const Success = () => {
     useEffect(() => {
         const createOrder = async () => {
             try {
-                const res = await api.post("/orders", {
+                const res = await transactionApi.order({
                     userId: currentUser._id,
                     products: cart.products.map((item) => ({
                         productId: item._id,
@@ -33,7 +32,7 @@ const Success = () => {
             }
         };
         data && createOrder();
-    }, [cart, data, currentUser]);
+    }, [cart, data, currentUser, dispatch]);
 
     return (
         <div

@@ -6,19 +6,18 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import { logout } from "../../redux/slices/userSlice";
+import { Badge, styled } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Badge, styled } from "@mui/material";
-import { useUser } from "../../hooks";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
+import { useUser } from "../../hooks";
+import { logout } from "../../redux/slices/userSlice";
+import { useCart } from "../../hooks";
 
 const StyledToolbar = styled(Toolbar)({
     height: "4.5rem",
@@ -28,6 +27,7 @@ const StyledToolbar = styled(Toolbar)({
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const cart = useCart();
     const { user } = useUser();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -69,8 +69,8 @@ const Header = () => {
     };
 
     return (
-        <AppBar position="sticky">
-            <Container maxWidth="xl">
+        <AppBar className="header" position="sticky">
+            <Container className="header__container" maxWidth="xl">
                 <StyledToolbar disableGutters variant="dense">
                     <Box
                         sx={{
@@ -111,7 +111,10 @@ const Header = () => {
                         </Link>
                     </Box>
 
-                    <Box sx={{ flex: 0, display: { xs: "flex", md: "none" } }}>
+                    <Box
+                        sx={{ flex: 0, display: { xs: "flex", md: "none" } }}
+                        className="header__settings"
+                    >
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -153,7 +156,7 @@ const Header = () => {
                                                 color: "black",
                                             }}
                                         >
-                                            <li
+                                            <span
                                                 key={page}
                                                 style={{
                                                     margin: "0 10px",
@@ -162,7 +165,7 @@ const Header = () => {
                                                 }}
                                             >
                                                 {page}
-                                            </li>
+                                            </span>
                                         </Link>
                                     </Typography>
                                 </MenuItem>
@@ -213,24 +216,25 @@ const Header = () => {
                         component="ul"
                     >
                         {pages.map((page) => (
-                            <Link
-                                to={`/products/${page}`}
+                            <li
+                                key={page}
                                 style={{
-                                    textDecoration: "none",
-                                    color: "white",
+                                    margin: "0 10px",
+                                    fontSize: "2rem",
+                                    textTransform: "capitalize",
                                 }}
                             >
-                                <li
+                                <Link
                                     key={page}
+                                    to={`/products/${page}`}
                                     style={{
-                                        margin: "0 10px",
-                                        fontSize: "2rem",
-                                        textTransform: "capitalize",
+                                        textDecoration: "none",
+                                        color: "white",
                                     }}
                                 >
                                     {page}
-                                </li>
-                            </Link>
+                                </Link>
+                            </li>
                         ))}
                     </Box>
 
@@ -274,7 +278,7 @@ const Header = () => {
                                             padding: 0,
                                         },
                                     }}
-                                    badgeContent={0}
+                                    badgeContent={cart.quantity}
                                     color="error"
                                     showZero
                                 >

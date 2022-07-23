@@ -1,12 +1,12 @@
 import toast, { Toaster } from "react-hot-toast";
 import { Add, Remove, Star, StarHalf } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material";
 
 import "./Product.scss";
-import { productsAPI } from "../../api";
+import { productsApi } from "../../api";
 import { Announcement, Footer, Header, Newsletter } from "../../components";
 import { useUser } from "../../hooks";
 import { addProduct } from "../../redux/slices/cartSlice";
@@ -32,15 +32,17 @@ const Product = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const getProduct = async () => {
-            try {
-                const res = await productsAPI.getById(id);
-                setProduct(res);
-                setColor(res.color[0]);
-                setSize(res.size[0]);
-            } catch (err) {
-                console.log("err", err);
-            }
+        const getProduct = () => {
+            productsApi
+                .getById(id)
+                .then((res) => {
+                    setProduct(res);
+                    setColor(res.color[0]);
+                    setSize(res.size[0]);
+                })
+                .catch((err) => {
+                    console.log("err", err);
+                });
         };
         getProduct();
     }, [id]);
